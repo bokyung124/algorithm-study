@@ -324,5 +324,122 @@ print(ac.suggest("xyz"))     # []`,
         'is_end 플래그 외에 count, depth 등 추가 정보를 저장하면 활용도가 높아집니다.',
       ],
     },
+    {
+      id: 'string-hashing',
+      name: '문자열 해싱',
+      description: '문자열을 해시값으로 변환하여 O(1)에 비교하는 기법입니다. 롤링 해시를 사용하면 부분 문자열의 해시를 O(1)에 계산할 수 있어 문자열 검색, 중복 부분 문자열 찾기 등에 활용됩니다.',
+      timeComplexity: 'O(N) (전처리), O(1) (부분 문자열 해시 쿼리)',
+      spaceComplexity: 'O(N)',
+      keyInsight: '문자열을 다항식 해시로 변환합니다: hash = s[0]*p^(n-1) + s[1]*p^(n-2) + ... + s[n-1]. 접두사 해시 배열을 미리 구해두면 임의 부분 문자열의 해시를 O(1)에 구할 수 있습니다. 해시 충돌을 줄이려면 이중 해싱을 사용합니다.',
+      pythonTools: [
+        {
+          name: 'pow()',
+          description: 'pow(base, exp, mod)로 모듈러 거듭제곱을 O(log N)에 계산합니다.',
+          import: '내장 함수',
+        },
+        {
+          name: 'list',
+          description: '접두사 해시 배열과 거듭제곱 배열을 미리 계산하여 저장합니다.',
+          import: '내장 자료형',
+        },
+      ],
+      codeExamples: [
+        {
+          title: '롤링 해시 기본 구현',
+          code: `MOD = 10**9 + 7
+BASE = 31
+
+def build_hash(s: str) -> tuple[list[int], list[int]]:
+    """접두사 해시 배열과 거듭제곱 배열을 구축"""
+    n = len(s)
+    h = [0] * (n + 1)      # h[i] = s[0..i-1]의 해시
+    pw = [1] * (n + 1)     # pw[i] = BASE^i % MOD
+
+    for i in range(n):
+        h[i + 1] = (h[i] * BASE + ord(s[i])) % MOD
+        pw[i + 1] = (pw[i] * BASE) % MOD
+
+    return h, pw
+
+def get_hash(h: list[int], pw: list[int], l: int, r: int) -> int:
+    """s[l..r] 부분 문자열의 해시를 O(1)에 반환 (0-indexed, 양끝 포함)"""
+    return (h[r + 1] - h[l] * pw[r - l + 1]) % MOD
+
+# 예시
+s = "abcabc"
+h, pw = build_hash(s)
+
+# s[0..2] = "abc"의 해시
+hash1 = get_hash(h, pw, 0, 2)
+# s[3..5] = "abc"의 해시
+hash2 = get_hash(h, pw, 3, 5)
+print(hash1 == hash2)  # True (같은 부분 문자열)
+
+# s[1..3] = "bca"의 해시
+hash3 = get_hash(h, pw, 1, 3)
+print(hash1 == hash3)  # False (다른 부분 문자열)`,
+          explanation: '접두사 해시 배열 h와 거듭제곱 배열 pw를 O(N)에 전처리한 뒤, 임의 부분 문자열 s[l..r]의 해시를 h[r+1] - h[l] * pw[r-l+1] 공식으로 O(1)에 계산합니다.',
+        },
+        {
+          title: '이중 해싱으로 부분 문자열 중복 찾기',
+          code: `def longest_duplicate_substring(s: str) -> str:
+    """이진 탐색 + 롤링 해시로 가장 긴 중복 부분 문자열 찾기
+    참고: BOJ 1786, LeetCode 1044"""
+    MOD1 = 10**9 + 7
+    MOD2 = 10**9 + 9
+    BASE1, BASE2 = 31, 37
+    n = len(s)
+
+    def check(length: int) -> str:
+        """길이 length인 중복 부분 문자열이 있으면 반환"""
+        h1 = h2 = 0
+        pw1 = pow(BASE1, length, MOD1)
+        pw2 = pow(BASE2, length, MOD2)
+
+        # 첫 윈도우 해시
+        for i in range(length):
+            h1 = (h1 * BASE1 + ord(s[i])) % MOD1
+            h2 = (h2 * BASE2 + ord(s[i])) % MOD2
+
+        seen = {(h1, h2)}
+
+        for i in range(1, n - length + 1):
+            h1 = (h1 * BASE1 - ord(s[i - 1]) * pw1 + ord(s[i + length - 1])) % MOD1
+            h2 = (h2 * BASE2 - ord(s[i - 1]) * pw2 + ord(s[i + length - 1])) % MOD2
+            if (h1, h2) in seen:
+                return s[i:i + length]
+            seen.add((h1, h2))
+        return ""
+
+    lo, hi = 0, n - 1
+    result = ""
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        dup = check(mid)
+        if dup:
+            result = dup
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return result
+
+# 예시
+print(longest_duplicate_substring("banana"))  # "ana"`,
+          explanation: '이진 탐색으로 중복 부분 문자열의 길이를 결정하고, 각 길이에 대해 롤링 해시로 중복 여부를 확인합니다. 이중 해싱(MOD1, MOD2)으로 해시 충돌을 방지합니다.',
+        },
+      ],
+      commonProblems: [
+        { name: '찾기', platform: 'boj', id: '1786' },
+        { name: 'Longest Duplicate Substring', platform: 'leetcode', id: '1044', slug: 'longest-duplicate-substring', difficulty: 'Hard' },
+        { name: '라면 먹고 싶다', platform: 'boj', id: '15893' },
+        { name: 'Repeated DNA Sequences', platform: 'leetcode', id: '187', slug: 'repeated-dna-sequences', difficulty: 'Medium' },
+      ],
+      tips: [
+        '해시 충돌을 방지하려면 이중 해싱(두 개의 다른 MOD 사용)을 권장합니다.',
+        'BASE는 문자 종류 수보다 큰 소수를 사용합니다 (영소문자만이면 31, 대소문자+숫자면 131).',
+        'Rabin-Karp 패턴 매칭은 롤링 해시의 대표적인 응용입니다.',
+        'Python에서는 내장 hash()를 사용하지 말고 직접 구현하세요 (결과가 실행마다 달라짐).',
+      ],
+    },
   ],
 }

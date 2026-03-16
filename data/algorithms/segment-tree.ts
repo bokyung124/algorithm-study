@@ -276,5 +276,106 @@ for _ in range(m + k):
         '재귀 깊이 제한에 걸릴 수 있으니 sys.setrecursionlimit을 넉넉히 설정하세요.',
       ],
     },
+    {
+      id: 'fenwick-tree',
+      name: '펜윅 트리 (BIT)',
+      description:
+        'Binary Indexed Tree. 세그먼트 트리보다 구현이 간단하며, 구간 합 쿼리와 점 업데이트를 O(log N)에 처리.',
+      timeComplexity: 'O(log N) (쿼리/업데이트)',
+      spaceComplexity: 'O(N)',
+      keyInsight:
+        '인덱스의 최하위 비트(lowbit = i & -i)를 이용하여 트리 구조를 구성합니다. 업데이트는 인덱스에 lowbit를 더하며 올라가고, 쿼리는 lowbit를 빼며 내려갑니다.',
+      pythonTools: [
+        {
+          name: 'list',
+          description: '1-indexed 배열로 펜윅 트리를 구성합니다. [0] * (n + 1)로 초기화하여 인덱스 1부터 사용합니다.',
+          import: '내장 자료형',
+        },
+      ],
+      codeExamples: [
+        {
+          title: '펜윅 트리 구현 (update, query, range_query)',
+          code: `class FenwickTree:
+    def __init__(self, n):
+        self.n = n
+        self.tree = [0] * (n + 1)  # 1-indexed
+
+    def update(self, i, delta):
+        """i번째 원소에 delta를 더한다 (1-indexed)"""
+        while i <= self.n:
+            self.tree[i] += delta
+            i += i & (-i)  # lowbit를 더하며 올라감
+
+    def query(self, i):
+        """1~i까지의 구간 합 (prefix sum)"""
+        s = 0
+        while i > 0:
+            s += self.tree[i]
+            i -= i & (-i)  # lowbit를 빼며 내려감
+        return s
+
+    def range_query(self, l, r):
+        """l~r 구간 합"""
+        return self.query(r) - self.query(l - 1)
+
+# 사용 예시
+bit = FenwickTree(6)
+arr = [1, 3, 5, 7, 9, 11]
+for i, v in enumerate(arr):
+    bit.update(i + 1, v)
+
+print(bit.query(4))         # 1+3+5+7 = 16
+print(bit.range_query(2, 5)) # 3+5+7+9 = 24`,
+          explanation:
+            'update는 인덱스에 lowbit(i & -i)를 더하며 영향받는 모든 노드를 갱신합니다. query는 lowbit를 빼며 누적 합을 구합니다. range_query는 prefix sum의 차로 구간 합을 계산합니다.',
+        },
+        {
+          title: '구간 합 구하기 (BOJ 2042)',
+          code: `import sys
+input = sys.stdin.readline
+
+def update(tree, i, delta, n):
+    while i <= n:
+        tree[i] += delta
+        i += i & (-i)
+
+def query(tree, i):
+    s = 0
+    while i > 0:
+        s += tree[i]
+        i -= i & (-i)
+    return s
+
+n, m, k = map(int, input().split())
+arr = [0] * (n + 1)
+tree = [0] * (n + 1)
+
+for i in range(1, n + 1):
+    arr[i] = int(input())
+    update(tree, i, arr[i], n)
+
+for _ in range(m + k):
+    a, b, c = map(int, input().split())
+    if a == 1:
+        diff = c - arr[b]
+        arr[b] = c
+        update(tree, b, diff, n)
+    else:
+        print(query(tree, c) - query(tree, b - 1))`,
+          explanation:
+            'BOJ 2042 풀이입니다. 값 변경 시 기존 값과의 차이(diff)를 update에 전달합니다. 구간 합은 prefix sum의 차이로 구합니다.',
+        },
+      ],
+      commonProblems: [
+        { name: '구간 합 구하기', platform: 'boj', id: '2042' },
+        { name: 'LCA 2', platform: 'boj', id: '11438' },
+        { name: 'Range Sum Query - Mutable', platform: 'leetcode', id: '307', slug: 'range-sum-query-mutable', difficulty: 'Medium' },
+      ],
+      tips: [
+        '펜윅 트리는 반드시 1-indexed를 사용해야 합니다. 0-indexed로 하면 i & (-i)가 0이 되어 무한 루프에 빠집니다.',
+        '세그먼트 트리 대비 구현이 간단하고 상수가 작지만, 구간 최솟값/최댓값 쿼리에는 적합하지 않습니다.',
+        '2D BIT로 확장하면 2차원 구간 합도 O(log N * log M)에 처리할 수 있습니다.',
+      ],
+    },
   ],
 }

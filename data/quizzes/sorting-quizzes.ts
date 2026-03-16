@@ -86,4 +86,28 @@ export const sortingQuizzes: Record<string, QuizQuestion[]> = {
       explanation: '원소를 직접 비교하지 않고 빈도를 세어 정렬하므로 비비교 기반입니다.',
     },
   ],
+  'custom-sort': [
+    {
+      id: 'custom-q1',
+      type: 'fill-blank',
+      question: '두 수를 이어붙여 비교하는 정렬처럼 단순 key로 표현하기 어려운 기준에는 functools의 ___를 사용한다.',
+      answer: 'cmp_to_key',
+      explanation: 'cmp_to_key는 두 원소를 직접 비교하는 함수를 sorted()의 key 매개변수에 사용할 수 있도록 변환합니다.',
+    },
+    {
+      id: 'custom-q2',
+      type: 'output-prediction',
+      question: '[3, 30, 34, 5, 9]를 이어붙여 가장 큰 수를 만들면?',
+      options: ['9534330', '9534303', '9353430', '3534309'],
+      answer: '9534330',
+      explanation: '9 > 5 > 34 > 3 > 30 순으로 정렬하면 "9534330"이 됩니다. 3과 30을 비교할 때 "330" > "303"이므로 3이 앞에 옵니다.',
+    },
+    {
+      id: 'custom-q3',
+      type: 'fill-blank',
+      question: '다중 기준 정렬에서 숫자를 내림차순으로 정렬하려면 key의 튜플에서 해당 값에 ___를 붙인다.',
+      answer: '-',
+      explanation: 'key=lambda x: (-x[1], x[0])처럼 음수 부호를 붙이면 값이 클수록 작은 key가 되어 내림차순 효과를 얻습니다.',
+    },
+  ],
 }

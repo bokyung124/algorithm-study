@@ -350,5 +350,227 @@ print(components)  # 2`,
         '연결 요소 내 정점 목록이 필요하면 딕셔너리로 그룹을 관리하세요.',
       ],
     },
+    {
+      id: 'scc',
+      name: '강한 연결 요소 (SCC)',
+      description:
+        '방향 그래프에서 모든 정점 쌍이 서로 도달 가능한 최대 부분 그래프.',
+      timeComplexity: 'O(V + E)',
+      spaceComplexity: 'O(V)',
+      keyInsight:
+        'Tarjan 알고리즘은 DFS 순회 중 스택과 방문 순서(dfn), 도달 가능한 최소 순서(low)를 관리합니다. low[u] == dfn[u]이면 u가 SCC의 루트입니다.',
+      pythonTools: [
+        {
+          name: 'sys',
+          description:
+            'sys.setrecursionlimit(10**6)으로 재귀 깊이 제한을 해제합니다. Tarjan 알고리즘은 DFS 기반이므로 필수입니다.',
+          import: 'import sys',
+        },
+        {
+          name: 'collections.defaultdict',
+          description:
+            'defaultdict(list)로 인접 리스트를 깔끔하게 생성합니다.',
+          import: 'from collections import defaultdict',
+        },
+      ],
+      codeExamples: [
+        {
+          title: "Tarjan's SCC",
+          code: `import sys
+sys.setrecursionlimit(10**6)
+
+def tarjan_scc(n, graph):
+    dfn = [0] * (n + 1)
+    low = [0] * (n + 1)
+    on_stack = [False] * (n + 1)
+    stack = []
+    timer = [0]
+    sccs = []
+
+    def dfs(u):
+        timer[0] += 1
+        dfn[u] = low[u] = timer[0]
+        stack.append(u)
+        on_stack[u] = True
+
+        for v in graph[u]:
+            if dfn[v] == 0:
+                dfs(v)
+                low[u] = min(low[u], low[v])
+            elif on_stack[v]:
+                low[u] = min(low[u], dfn[v])
+
+        if low[u] == dfn[u]:
+            scc = []
+            while True:
+                v = stack.pop()
+                on_stack[v] = False
+                scc.append(v)
+                if v == u:
+                    break
+            sccs.append(sorted(scc))
+
+    for i in range(1, n + 1):
+        if dfn[i] == 0:
+            dfs(i)
+    return sccs
+
+# 사용 예시
+from collections import defaultdict
+graph = defaultdict(list)
+edges = [(1,2),(2,3),(3,1),(3,4),(4,5),(5,6),(6,4)]
+for u, v in edges:
+    graph[u].append(v)
+
+result = tarjan_scc(6, graph)
+print(result)  # [[4, 5, 6], [1, 2, 3]]`,
+          explanation:
+            'DFS 순회 중 dfn(방문 순서)과 low(도달 가능한 최소 순서)를 관리합니다. low[u] == dfn[u]이면 스택에서 u까지의 모든 정점이 하나의 SCC를 구성합니다.',
+        },
+        {
+          title: "Kosaraju's SCC",
+          code: `import sys
+from collections import defaultdict
+sys.setrecursionlimit(10**6)
+
+def kosaraju_scc(n, graph):
+    # 1단계: 정방향 DFS로 종료 순서 기록
+    visited = [False] * (n + 1)
+    order = []
+
+    def dfs1(u):
+        visited[u] = True
+        for v in graph[u]:
+            if not visited[v]:
+                dfs1(v)
+        order.append(u)
+
+    for i in range(1, n + 1):
+        if not visited[i]:
+            dfs1(i)
+
+    # 2단계: 역방향 그래프 생성
+    rev_graph = defaultdict(list)
+    for u in graph:
+        for v in graph[u]:
+            rev_graph[v].append(u)
+
+    # 3단계: 역순으로 역방향 DFS
+    visited = [False] * (n + 1)
+    sccs = []
+
+    def dfs2(u, scc):
+        visited[u] = True
+        scc.append(u)
+        for v in rev_graph[u]:
+            if not visited[v]:
+                dfs2(v, scc)
+
+    for u in reversed(order):
+        if not visited[u]:
+            scc = []
+            dfs2(u, scc)
+            sccs.append(sorted(scc))
+
+    return sccs
+
+# 사용 예시
+graph = defaultdict(list)
+edges = [(1,2),(2,3),(3,1),(3,4),(4,5),(5,6),(6,4)]
+for u, v in edges:
+    graph[u].append(v)
+
+print(kosaraju_scc(6, graph))  # [[1, 2, 3], [4, 5, 6]]`,
+          explanation:
+            'Kosaraju 알고리즘은 3단계로 동작합니다: (1) 정방향 DFS로 종료 순서 기록, (2) 역방향 그래프 생성, (3) 종료 순서의 역순으로 역방향 DFS하여 SCC를 찾습니다.',
+        },
+      ],
+      commonProblems: [
+        { name: 'Strongly Connected Component', platform: 'boj', id: '2150' },
+        { name: '도미노', platform: 'boj', id: '4196' },
+        { name: 'Critical Connections in a Network', platform: 'leetcode', id: '1192', slug: 'critical-connections-in-a-network', difficulty: 'Hard' },
+      ],
+      tips: [
+        'Python에서는 재귀 깊이 제한에 주의하세요. sys.setrecursionlimit을 충분히 크게 설정해야 합니다.',
+        'SCC를 축약하면 DAG(방향 비순환 그래프)가 되어 위상 정렬 등을 적용할 수 있습니다.',
+        '2-SAT 문제는 SCC로 해결할 수 있습니다. 변수와 부정을 노드로 만들어 함의 그래프를 구성합니다.',
+      ],
+    },
+    {
+      id: 'bipartite-graph',
+      name: '이분 그래프',
+      description:
+        '그래프의 정점을 두 그룹으로 나누어 같은 그룹 내에는 간선이 없도록 할 수 있는지 판별.',
+      timeComplexity: 'O(V + E)',
+      spaceComplexity: 'O(V)',
+      keyInsight:
+        'BFS/DFS로 인접한 정점에 번갈아 색을 칠합니다. 인접한 정점이 같은 색이면 이분 그래프가 아닙니다. 홀수 길이 사이클이 존재하면 이분 그래프가 아닙니다.',
+      pythonTools: [
+        {
+          name: 'collections.deque',
+          description:
+            'BFS로 이분 그래프 판별 시 큐로 사용합니다. popleft() O(1)로 효율적인 탐색이 가능합니다.',
+          import: 'from collections import deque',
+        },
+        {
+          name: 'collections.defaultdict',
+          description:
+            'defaultdict(list)로 인접 리스트를 깔끔하게 생성합니다.',
+          import: 'from collections import defaultdict',
+        },
+      ],
+      codeExamples: [
+        {
+          title: 'BFS 기반 이분 그래프 판별 (BOJ 1707)',
+          code: `import sys
+from collections import deque
+input = sys.stdin.readline
+
+def is_bipartite(n, graph):
+    color = [0] * (n + 1)  # 0: 미방문, 1: 그룹A, -1: 그룹B
+
+    for start in range(1, n + 1):
+        if color[start] != 0:
+            continue
+        # BFS로 색칠
+        queue = deque([start])
+        color[start] = 1
+
+        while queue:
+            u = queue.popleft()
+            for v in graph[u]:
+                if color[v] == 0:
+                    color[v] = -color[u]  # 반대 색
+                    queue.append(v)
+                elif color[v] == color[u]:
+                    return False  # 같은 색 → 이분 그래프 아님
+    return True
+
+# BOJ 1707 풀이
+T = int(input())
+for _ in range(T):
+    V, E = map(int, input().split())
+    graph = [[] for _ in range(V + 1)]
+    for _ in range(E):
+        u, v = map(int, input().split())
+        graph[u].append(v)
+        graph[v].append(u)
+
+    print("YES" if is_bipartite(V, graph) else "NO")`,
+          explanation:
+            '각 정점에 1 또는 -1의 색을 칠합니다. 인접한 정점에 반대 색을 칠하고, 이미 같은 색이 칠해져 있으면 이분 그래프가 아닙니다. 연결 요소가 여러 개일 수 있으므로 모든 정점에서 시작합니다.',
+        },
+      ],
+      commonProblems: [
+        { name: '이분 그래프', platform: 'boj', id: '1707' },
+        { name: 'Is Graph Bipartite?', platform: 'leetcode', id: '785', slug: 'is-graph-bipartite', difficulty: 'Medium' },
+        { name: '작업', platform: 'boj', id: '2056' },
+      ],
+      tips: [
+        '연결 요소가 여러 개일 수 있으므로 모든 정점에서 시작해야 합니다.',
+        '이분 그래프는 홀수 길이 사이클이 없는 것과 동치입니다.',
+        '이분 매칭, 최소 정점 커버 등 고급 알고리즘의 기반이 됩니다.',
+      ],
+    },
   ],
 }

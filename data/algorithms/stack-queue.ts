@@ -302,5 +302,177 @@ print(stock_prices([5, 3, 1, 2, 4]))
         '각 원소는 스택에 최대 1번 push, 1번 pop되므로 전체 O(n)이 보장됩니다.',
       ],
     },
+    {
+      id: 'deque-basic',
+      name: '덱 (Deque)',
+      description:
+        '양쪽 끝에서 삽입/삭제가 가능한 자료구조. 스택과 큐의 기능을 모두 가짐.',
+      timeComplexity: 'O(1) (양쪽 삽입/삭제)',
+      spaceComplexity: 'O(N)',
+      keyInsight:
+        'collections.deque는 양쪽 끝 연산이 O(1)입니다. 리스트의 왼쪽 삽입/삭제는 O(N)이므로, 왼쪽 연산이 필요하면 반드시 deque를 사용해야 합니다.',
+      pythonTools: [
+        {
+          name: 'collections.deque',
+          description:
+            'appendleft()로 왼쪽 삽입, popleft()로 왼쪽 삭제, append()로 오른쪽 삽입, pop()으로 오른쪽 삭제를 모두 O(1)에 수행합니다.',
+          import: 'from collections import deque',
+        },
+        {
+          name: 'list와 비교',
+          description:
+            'list.insert(0, x)는 O(N), list.pop(0)은 O(N)이므로, 왼쪽 연산이 필요한 경우 deque가 필수적입니다.',
+          import: '내장 자료형',
+        },
+      ],
+      codeExamples: [
+        {
+          title: '덱 기본 사용법',
+          code: `from collections import deque
+
+dq = deque()
+
+# 오른쪽 삽입/삭제 (스택처럼)
+dq.append(1)      # deque([1])
+dq.append(2)      # deque([1, 2])
+dq.append(3)      # deque([1, 2, 3])
+
+# 왼쪽 삽입/삭제 (큐의 앞쪽)
+dq.appendleft(0)  # deque([0, 1, 2, 3])
+dq.popleft()      # 0 반환, deque([1, 2, 3])
+
+# 오른쪽 삭제
+dq.pop()           # 3 반환, deque([1, 2])
+
+# 양쪽 끝 확인 (인덱싱)
+print(dq[0])       # 1 (왼쪽 끝)
+print(dq[-1])      # 2 (오른쪽 끝)
+
+# rotate 활용
+dq = deque([1, 2, 3, 4, 5])
+dq.rotate(2)       # deque([4, 5, 1, 2, 3]) 오른쪽으로 2칸
+dq.rotate(-2)      # deque([1, 2, 3, 4, 5]) 왼쪽으로 2칸`,
+          explanation:
+            'deque는 양쪽 끝에서 O(1)으로 삽입/삭제가 가능합니다. rotate()를 사용하면 원형 큐를 간단하게 구현할 수 있습니다.',
+        },
+        {
+          title: 'BOJ 10866 덱 구현',
+          code: `import sys
+from collections import deque
+input = sys.stdin.readline
+
+N = int(input())
+dq = deque()
+
+for _ in range(N):
+    cmd = input().split()
+    if cmd[0] == 'push_front':
+        dq.appendleft(int(cmd[1]))
+    elif cmd[0] == 'push_back':
+        dq.append(int(cmd[1]))
+    elif cmd[0] == 'pop_front':
+        print(dq.popleft() if dq else -1)
+    elif cmd[0] == 'pop_back':
+        print(dq.pop() if dq else -1)
+    elif cmd[0] == 'size':
+        print(len(dq))
+    elif cmd[0] == 'empty':
+        print(0 if dq else 1)
+    elif cmd[0] == 'front':
+        print(dq[0] if dq else -1)
+    elif cmd[0] == 'back':
+        print(dq[-1] if dq else -1)`,
+          explanation:
+            'collections.deque를 사용하면 push_front, push_back, pop_front, pop_back 모두 O(1)에 처리할 수 있습니다.',
+        },
+      ],
+      commonProblems: [
+        { name: '덱', platform: 'boj', id: '10866' },
+        { name: '회전하는 큐', platform: 'boj', id: '1021' },
+        {
+          name: 'Design Circular Deque',
+          platform: 'leetcode',
+          id: '641',
+          slug: 'design-circular-deque',
+          difficulty: 'Medium',
+        },
+      ],
+      tips: [
+        'list의 왼쪽 삽입/삭제는 O(N)이므로, 왼쪽 연산이 필요하면 반드시 deque를 사용하세요.',
+        'BFS에서도 from collections import deque를 사용하여 큐를 구현합니다.',
+        'deque는 maxlen 인자를 지정하면 고정 크기 원형 버퍼로 사용할 수 있습니다.',
+        'rotate()를 활용하면 원형 큐 문제를 간결하게 풀 수 있습니다.',
+      ],
+    },
+    {
+      id: 'monotone-deque',
+      name: '모노톤 덱 (슬라이딩 윈도우 최대/최소)',
+      description:
+        '덱을 단조 증가/감소로 유지하여 슬라이딩 윈도우 내 최대/최소를 O(1)에 구하는 기법.',
+      timeComplexity: 'O(N)',
+      spaceComplexity: 'O(K) (K = 윈도우 크기)',
+      keyInsight:
+        '윈도우에서 나갈 원소와 새로 들어올 원소를 덱의 양쪽에서 관리합니다. 새 원소보다 불리한(작거나 큰) 원소를 뒤에서 제거하여 단조성을 유지합니다.',
+      pythonTools: [
+        {
+          name: 'collections.deque',
+          description:
+            '앞에서 만료된 인덱스를 popleft()로 제거하고, 뒤에서 단조성을 깨는 원소를 pop()으로 제거합니다. 양쪽 연산 모두 O(1)입니다.',
+          import: 'from collections import deque',
+        },
+      ],
+      codeExamples: [
+        {
+          title: '슬라이딩 윈도우 최댓값 (BOJ 11003 / LeetCode 239)',
+          code: `from collections import deque
+
+def max_sliding_window(nums, k):
+    """크기 k 윈도우의 최댓값 배열 반환"""
+    dq = deque()  # 인덱스 저장, 값은 단조 감소
+    result = []
+
+    for i in range(len(nums)):
+        # 1. 윈도우 밖으로 나간 원소 제거
+        if dq and dq[0] <= i - k:
+            dq.popleft()
+
+        # 2. 새 원소보다 작은 원소는 뒤에서 제거 (단조 감소 유지)
+        while dq and nums[dq[-1]] <= nums[i]:
+            dq.pop()
+
+        # 3. 새 원소의 인덱스 추가
+        dq.append(i)
+
+        # 4. 윈도우가 k개 이상 채워지면 최댓값 기록
+        if i >= k - 1:
+            result.append(nums[dq[0]])  # 덱의 맨 앞이 최댓값
+
+    return result
+
+# 사용 예시
+print(max_sliding_window([1, 3, -1, -3, 5, 3, 6, 7], 3))
+# [3, 3, 5, 5, 6, 7]`,
+          explanation:
+            '덱에 인덱스를 저장하되, 해당 값이 단조 감소하도록 유지합니다. 덱의 앞(dq[0])이 항상 현재 윈도우의 최댓값 인덱스입니다. 각 원소는 최대 1번 삽입, 1번 삭제되므로 전체 O(N)입니다.',
+        },
+      ],
+      commonProblems: [
+        { name: '최솟값 찾기', platform: 'boj', id: '11003' },
+        {
+          name: 'Sliding Window Maximum',
+          platform: 'leetcode',
+          id: '239',
+          slug: 'sliding-window-maximum',
+          difficulty: 'Hard',
+        },
+        { name: '부분배열 고르기', platform: 'boj', id: '2104' },
+      ],
+      tips: [
+        '모노톤 스택과 달리 덱의 앞에서도 만료된 원소를 제거합니다.',
+        '덱에는 값이 아닌 인덱스를 저장하여 윈도우 범위를 판단합니다.',
+        '최솟값을 구하려면 단조 증가 덱, 최댓값을 구하려면 단조 감소 덱을 유지합니다.',
+        '각 원소가 최대 1번 삽입, 1번 삭제되므로 전체 시간복잡도는 O(N)입니다.',
+      ],
+    },
   ],
 }

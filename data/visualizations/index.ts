@@ -5,6 +5,7 @@ import { bubbleSortViz } from './bubble-sort-viz'
 import { mergeSortViz } from './merge-sort-viz'
 import { quickSortViz } from './quick-sort-viz'
 import { countingSortViz } from './counting-sort-viz'
+import { customSortViz } from './custom-sort-viz'
 
 // Searching
 import { linearSearchViz } from './linear-search-viz'
@@ -21,6 +22,8 @@ import { intervalDpViz } from './interval-dp-viz'
 import { dfsViz } from './dfs-viz'
 import { bfsViz } from './bfs-viz'
 import { connectedComponentsViz } from './connected-components-viz'
+import { sccViz } from './scc-viz'
+import { bipartiteViz } from './bipartite-viz'
 
 // Greedy
 import { activitySelectionViz } from './activity-selection-viz'
@@ -36,6 +39,8 @@ import { matrixRotationViz } from './matrix-rotation-viz'
 import { stackViz } from './stack-viz'
 import { queueBasicViz } from './queue-basic-viz'
 import { monotoneStackViz } from './monotone-stack-viz'
+import { dequeViz } from './deque-viz'
+import { monotoneDequeViz } from './monotone-deque-viz'
 
 // Hash
 import { hashMapViz } from './hash-map-viz'
@@ -56,6 +61,7 @@ import { treeDpViz } from './tree-dp-viz'
 import { kmpViz } from './kmp-viz'
 import { rabinKarpViz } from './rabin-karp-viz'
 import { trieViz } from './trie-viz'
+import { stringHashingViz } from './string-hashing-viz'
 
 // Trie
 import { trieBasicViz } from './trie-basic-viz'
@@ -74,6 +80,7 @@ import { bitmaskDpViz } from './bitmask-dp-viz'
 // Segment Tree
 import { basicSegmentTreeViz } from './basic-segment-tree-viz'
 import { lazyPropagationViz } from './lazy-propagation-viz'
+import { fenwickTreeViz } from './fenwick-tree-viz'
 
 // Union-Find
 import { basicUnionFindViz } from './basic-union-find-viz'
@@ -146,6 +153,7 @@ const visualizationMap: Record<string, VisualizationConfig> = {
   'sorting/merge-sort': mergeSortViz,
   'sorting/quick-sort': quickSortViz,
   'sorting/counting-sort': countingSortViz,
+  'sorting/custom-sort': customSortViz,
 
   // Searching
   'searching/linear-search': linearSearchViz,
@@ -162,6 +170,8 @@ const visualizationMap: Record<string, VisualizationConfig> = {
   'graph/dfs': dfsViz,
   'graph/bfs': bfsViz,
   'graph/connected-components': connectedComponentsViz,
+  'graph/scc': sccViz,
+  'graph/bipartite-graph': bipartiteViz,
 
   // Greedy
   'greedy/activity-selection': activitySelectionViz,
@@ -177,6 +187,8 @@ const visualizationMap: Record<string, VisualizationConfig> = {
   'stack-queue/stack-basic': stackViz,
   'stack-queue/queue-basic': queueBasicViz,
   'stack-queue/monotone-stack': monotoneStackViz,
+  'stack-queue/deque-basic': dequeViz,
+  'stack-queue/monotone-deque': monotoneDequeViz,
 
   // Hash
   'hash/hash-map': hashMapViz,
@@ -197,6 +209,7 @@ const visualizationMap: Record<string, VisualizationConfig> = {
   'string/kmp': kmpViz,
   'string/rabin-karp': rabinKarpViz,
   'string/trie': trieViz,
+  'string/string-hashing': stringHashingViz,
 
   // Math
   'math/prime-sieve': primeSieveViz,
@@ -211,6 +224,7 @@ const visualizationMap: Record<string, VisualizationConfig> = {
   // Segment Tree
   'segment-tree/basic-segment-tree': basicSegmentTreeViz,
   'segment-tree/lazy-propagation': lazyPropagationViz,
+  'segment-tree/fenwick-tree': fenwickTreeViz,
 
   // Union-Find
   'union-find/basic-union-find': basicUnionFindViz,

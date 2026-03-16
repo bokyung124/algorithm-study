@@ -364,5 +364,86 @@ print(frequency_sort("tree"))  # "eert" 또는 "eetr"`,
         '안정 정렬이 필요하면 누적합을 이용한 방식을 사용하세요.',
       ],
     },
+    {
+      id: 'custom-sort',
+      name: '커스텀 정렬',
+      description:
+        '기본 오름차순/내림차순이 아닌 문제 특화 비교 기준을 정의하여 정렬하는 기법입니다. key 함수나 cmp_to_key를 활용하며, 코딩 테스트에서 매우 자주 출제됩니다.',
+      timeComplexity: 'O(n log n)',
+      spaceComplexity: 'O(n)',
+      keyInsight:
+        '정렬 기준을 직접 정의하는 것이 핵심입니다. 단일 기준은 key 함수로, 두 원소를 이어붙여 비교하는 등 복잡한 기준은 cmp_to_key로 비교 함수를 작성합니다. 다중 기준 정렬은 튜플 key로 우선순위를 표현합니다.',
+      pythonTools: [
+        {
+          name: 'sorted() / list.sort()',
+          description:
+            'key 매개변수에 람다 함수를 전달하여 커스텀 정렬 기준을 정의합니다. 다중 기준은 튜플을 반환하는 key로 처리합니다.',
+          import: '내장 함수',
+        },
+        {
+          name: 'functools.cmp_to_key',
+          description:
+            '두 원소를 직접 비교하는 비교 함수를 key 함수로 변환합니다. 이어붙이기 비교처럼 단순 key로 표현하기 어려운 경우에 사용합니다.',
+          import: 'from functools import cmp_to_key',
+        },
+      ],
+      codeExamples: [
+        {
+          title: '가장 큰 수 만들기',
+          code: `from functools import cmp_to_key
+
+def largest_number(nums):
+    nums_str = list(map(str, nums))
+    nums_str.sort(key=cmp_to_key(lambda a, b: -1 if a+b > b+a else 1))
+    return str(int(''.join(nums_str)))
+
+# 사용 예시
+print(largest_number([3, 30, 34, 5, 9]))  # "9534330"`,
+          explanation:
+            '두 수 a, b를 이어붙인 a+b와 b+a를 비교하여 더 큰 수가 앞에 오도록 정렬합니다. 단순 key로는 표현할 수 없는 비교 기준이므로 cmp_to_key를 사용합니다.',
+        },
+        {
+          title: '다중 기준 정렬',
+          code: `# 학생을 성적 내림차순, 같으면 이름 오름차순으로 정렬
+students = [("Alice", 90), ("Bob", 85), ("Charlie", 90), ("Dave", 85)]
+students.sort(key=lambda x: (-x[1], x[0]))
+# [("Alice", 90), ("Charlie", 90), ("Bob", 85), ("Dave", 85)]
+
+# BOJ 10825 - 국영수
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+arr = []
+for _ in range(n):
+    name, kor, eng, math = input().split()
+    arr.append((name, int(kor), int(eng), int(math)))
+
+arr.sort(key=lambda x: (-x[1], x[2], -x[3], x[0]))
+for name, *_ in arr:
+    print(name)`,
+          explanation:
+            '튜플 key로 다중 기준을 표현합니다. 내림차순이 필요한 숫자 기준에는 -를 붙이고, 문자열 오름차순은 그대로 둡니다. 튜플은 앞 원소부터 비교하므로 우선순위가 자연스럽게 적용됩니다.',
+        },
+      ],
+      commonProblems: [
+        {
+          name: 'Largest Number',
+          platform: 'leetcode',
+          id: '179',
+          slug: 'largest-number',
+          difficulty: 'Medium',
+        },
+        { name: '국영수', platform: 'boj', id: '10825' },
+        { name: '가장 큰 수', platform: 'programmers', id: '42746' },
+        { name: '좌표 정렬하기', platform: 'boj', id: '11650' },
+      ],
+      tips: [
+        '단순 기준은 key=lambda로, 복잡한 비교는 cmp_to_key를 사용하세요.',
+        '다중 기준 정렬 시 튜플 key를 사용하면 코드가 간결해집니다.',
+        '내림차순이 필요한 숫자 기준에는 -를 붙이면 됩니다. 문자열 내림차순이 필요하면 cmp_to_key를 사용하세요.',
+        'Python의 sort는 안정 정렬이므로 같은 key의 원소는 원래 순서가 유지됩니다.',
+      ],
+    },
   ],
 }
