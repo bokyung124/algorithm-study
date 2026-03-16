@@ -26,6 +26,9 @@ export default function Header({ onToggleSidebar }: HeaderProps) {
       </div>
 
       <div className="flex items-center gap-4">
+        <Link to="/review" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
+          복습
+        </Link>
         <Link to="/reference" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
           레퍼런스
         </Link>

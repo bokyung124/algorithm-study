@@ -8,6 +8,7 @@ import CategoryPage from './pages/CategoryPage'
 import PatternPage from './pages/PatternPage'
 import MemosPage from './pages/MemosPage'
 import ReferencePage from './pages/ReferencePage'
+import ReviewPage from './pages/ReviewPage'
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="category/:categoryId/:patternId" element={<PatternPage />} />
           <Route path="memos" element={<MemosPage />} />
           <Route path="reference" element={<ReferencePage />} />
+          <Route path="review" element={<ReviewPage />} />
         </Route>
       </Route>
     </Routes>

@@ -3,6 +3,10 @@ import { getCategoryById } from '../data/categories'
 import CodeBlock from '../components/algorithm/CodeBlock'
 import ComplexityBadge from '../components/algorithm/ComplexityBadge'
 import MemoEditor from '../components/memo/MemoEditor'
+import RelatedPatterns from '../components/algorithm/RelatedPatterns'
+import StudyButton from '../components/algorithm/StudyButton'
+import QuizSection from '../components/quiz/QuizSection'
+import VisualizationSection from '../components/visualization/VisualizationSection'
 import type { Problem } from '../types/algorithm'
 
 function getProblemUrl(problem: Problem): string {
@@ -77,6 +81,12 @@ export default function PatternPage() {
         <ComplexityBadge label="공간" value={pattern.spaceComplexity} variant="space" />
       </div>
 
+      {/* Study Button */}
+      <StudyButton categoryId={category.id} patternId={pattern.id} />
+
+      {/* Visualization */}
+      <VisualizationSection categoryId={category.id} patternId={pattern.id} />
+
       {/* Key Insight */}
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
         <h3 className="text-sm font-semibold text-blue-800 mb-1">핵심 아이디어</h3>
@@ -127,6 +137,9 @@ export default function PatternPage() {
         </section>
       )}
 
+      {/* Quiz */}
+      <QuizSection categoryId={category.id} patternId={pattern.id} />
+
       {/* Common Problems */}
       {pattern.commonProblems.length > 0 && (
         <section className="mb-6">
@@ -153,6 +166,9 @@ export default function PatternPage() {
           </ul>
         </section>
       )}
+
+      {/* Related Patterns */}
+      <RelatedPatterns categoryId={category.id} patternId={pattern.id} />
 
       {/* Memo */}
       <section>
