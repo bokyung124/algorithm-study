@@ -4,6 +4,9 @@ import Providers from './providers'
 
 export const metadata: Metadata = {
   title: 'Algorithm Study',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
