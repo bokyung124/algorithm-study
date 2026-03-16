@@ -57,6 +57,10 @@ import { kmpViz } from './kmp-viz'
 import { rabinKarpViz } from './rabin-karp-viz'
 import { trieViz } from './trie-viz'
 
+// Trie
+import { trieBasicViz } from './trie-basic-viz'
+import { autocompleteViz } from './autocomplete-viz'
+
 // Math
 import { primeSieveViz } from './prime-sieve-viz'
 import { gcdLcmViz } from './gcd-lcm-viz'
@@ -93,6 +97,48 @@ import { floydWarshallViz } from './floyd-warshall-viz'
 // Topological Sort
 import { kahnAlgorithmViz } from './kahn-algorithm-viz'
 import { dfsTopologicalSortViz } from './dfs-topological-sort-viz'
+
+// MST
+import { kruskalViz } from './kruskal-viz'
+import { primViz } from './prim-viz'
+
+// Heap
+import { heapBasicViz } from './heap-basic-viz'
+import { topKViz } from './top-k-viz'
+
+// Prefix Sum
+import { prefixSum1dViz } from './prefix-sum-1d-viz'
+import { prefixSum2dViz } from './prefix-sum-2d-viz'
+
+// Divide and Conquer
+import { divideConquerBasicViz } from './divide-conquer-basic-viz'
+import { fastExponentiationViz } from './fast-exponentiation-viz'
+
+// Simulation
+import { simulationBasicViz } from './simulation-basic-viz'
+import { gridMovementViz } from './grid-movement-viz'
+
+// Brute Force
+import { exhaustiveSearchViz } from './exhaustive-search-viz'
+import { permutationViz } from './permutation-viz'
+
+// Coordinate Compression
+import { coordinateCompressionViz } from './coordinate-compression-viz'
+
+// LCA
+import { lcaViz } from './lca-viz'
+
+// Network Flow
+import { maxFlowViz } from './max-flow-viz'
+import { bipartiteMatchingViz } from './bipartite-matching-viz'
+
+// Geometry
+import { ccwViz } from './ccw-viz'
+import { convexHullViz } from './convex-hull-viz'
+
+// Sweeping
+import { lineeSweepingViz } from './line-sweeping-viz'
+import { eventSweepingViz } from './event-sweeping-viz'
 
 const visualizationMap: Record<string, VisualizationConfig> = {
   // Sorting
@@ -188,6 +234,52 @@ const visualizationMap: Record<string, VisualizationConfig> = {
   // Topological Sort
   'topological-sort/kahn-algorithm': kahnAlgorithmViz,
   'topological-sort/dfs-topological-sort': dfsTopologicalSortViz,
+
+  // Trie
+  'trie/basic-trie': trieBasicViz,
+  'trie/autocomplete': autocompleteViz,
+
+  // MST
+  'mst/kruskal': kruskalViz,
+  'mst/prim': primViz,
+
+  // Heap
+  'heap/heap-basic': heapBasicViz,
+  'heap/top-k': topKViz,
+
+  // Prefix Sum
+  'prefix-sum/prefix-sum-1d': prefixSum1dViz,
+  'prefix-sum/prefix-sum-2d': prefixSum2dViz,
+
+  // Divide and Conquer
+  'divide-and-conquer/basic-divide-conquer': divideConquerBasicViz,
+  'divide-and-conquer/fast-exponentiation': fastExponentiationViz,
+
+  // Simulation
+  'simulation/basic-simulation': simulationBasicViz,
+  'simulation/grid-movement': gridMovementViz,
+
+  // Brute Force
+  'brute-force/exhaustive-search': exhaustiveSearchViz,
+  'brute-force/permutation-combination': permutationViz,
+
+  // Coordinate Compression
+  'coordinate-compression/basic-compression': coordinateCompressionViz,
+
+  // LCA
+  'lca/naive-lca': lcaViz,
+
+  // Network Flow
+  'network-flow/max-flow': maxFlowViz,
+  'network-flow/bipartite-matching': bipartiteMatchingViz,
+
+  // Geometry
+  'geometry/ccw': ccwViz,
+  'geometry/convex-hull': convexHullViz,
+
+  // Sweeping
+  'sweeping/line-sweeping': lineeSweepingViz,
+  'sweeping/event-sweeping': eventSweepingViz,
 }
 
 export function getVisualization(categoryId: string, patternId: string): VisualizationConfig | null {

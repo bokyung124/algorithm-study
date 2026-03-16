@@ -17,6 +17,18 @@ import { unionFindQuizzes } from './union-find-quizzes'
 import { greedyQuizzes } from './greedy-quizzes'
 import { topologicalSortQuizzes } from './topological-sort-quizzes'
 import { implementationQuizzes } from './implementation-quizzes'
+import { trieQuizzes } from './trie-quizzes'
+import { mstQuizzes } from './mst-quizzes'
+import { heapQuizzes } from './heap-quizzes'
+import { prefixSumQuizzes } from './prefix-sum-quizzes'
+import { divideAndConquerQuizzes } from './divide-and-conquer-quizzes'
+import { simulationQuizzes } from './simulation-quizzes'
+import { bruteForceQuizzes } from './brute-force-quizzes'
+import { coordinateCompressionQuizzes } from './coordinate-compression-quizzes'
+import { lcaQuizzes } from './lca-quizzes'
+import { networkFlowQuizzes } from './network-flow-quizzes'
+import { geometryQuizzes } from './geometry-quizzes'
+import { sweepingQuizzes } from './sweeping-quizzes'
 
 const allQuizzes: Record<string, Record<string, QuizQuestion[]>> = {
   'sorting': sortingQuizzes,
@@ -37,6 +49,18 @@ const allQuizzes: Record<string, Record<string, QuizQuestion[]>> = {
   'greedy': greedyQuizzes,
   'topological-sort': topologicalSortQuizzes,
   'implementation': implementationQuizzes,
+  'trie': trieQuizzes,
+  'mst': mstQuizzes,
+  'heap': heapQuizzes,
+  'prefix-sum': prefixSumQuizzes,
+  'divide-and-conquer': divideAndConquerQuizzes,
+  'simulation': simulationQuizzes,
+  'brute-force': bruteForceQuizzes,
+  'coordinate-compression': coordinateCompressionQuizzes,
+  'lca': lcaQuizzes,
+  'network-flow': networkFlowQuizzes,
+  'geometry': geometryQuizzes,
+  'sweeping': sweepingQuizzes,
 }
 
 export function getQuizzes(categoryId: string, patternId: string): QuizQuestion[] {
