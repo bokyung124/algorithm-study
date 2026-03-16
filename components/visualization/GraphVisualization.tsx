@@ -49,17 +49,35 @@ export default function GraphVisualization({ step }: Props) {
           const nodeRadius = 18
           const endX = toPos.x - (dx / len) * nodeRadius
           const endY = toPos.y - (dy / len) * nodeRadius
+
+          const midX = (fromPos.x + toPos.x) / 2
+          const midY = (fromPos.y + toPos.y) / 2
+          const weight = step.weights?.[`${from}-${to}`]
+
           return (
-            <line
-              key={i}
-              x1={fromPos.x}
-              y1={fromPos.y}
-              x2={endX}
-              y2={endY}
-              stroke="#cbd5e1"
-              strokeWidth={2}
-              markerEnd="url(#arrowhead)"
-            />
+            <g key={i}>
+              <line
+                x1={fromPos.x}
+                y1={fromPos.y}
+                x2={endX}
+                y2={endY}
+                stroke="#cbd5e1"
+                strokeWidth={2}
+                markerEnd="url(#arrowhead)"
+              />
+              {weight !== undefined && (
+                <text
+                  x={midX}
+                  y={midY - 6}
+                  textAnchor="middle"
+                  fontSize={10}
+                  fill="#9ca3af"
+                  fontWeight="bold"
+                >
+                  {weight}
+                </text>
+              )}
+            </g>
           )
         })}
         {/* Arrow marker */}
@@ -72,6 +90,7 @@ export default function GraphVisualization({ step }: Props) {
         {nodes.map((node) => {
           const pos = positions[node]
           if (!pos) return null
+          const dist = step.distances?.[node]
           return (
             <g key={node}>
               <circle
@@ -94,13 +113,25 @@ export default function GraphVisualization({ step }: Props) {
               >
                 {node}
               </text>
+              {dist !== undefined && (
+                <text
+                  x={pos.x}
+                  y={pos.y + 30}
+                  textAnchor="middle"
+                  fontSize={10}
+                  fill="#6366f1"
+                  fontWeight="bold"
+                >
+                  {dist === null ? '∞' : dist}
+                </text>
+              )}
             </g>
           )
         })}
       </svg>
 
       {/* Queue/Stack display */}
-      {step.queue.length > 0 && (
+      {step.queue.length > 0 && !step.distances && (
         <div className="flex items-center gap-1.5 mt-2">
           <span className="text-xs text-gray-500 font-medium">
             {step.edges.length > 0 ? '대기열' : '스택'}:

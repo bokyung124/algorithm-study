@@ -10,6 +10,7 @@ import RelatedPatterns from '@/components/algorithm/RelatedPatterns'
 import StudyButton from '@/components/algorithm/StudyButton'
 import QuizSection from '@/components/quiz/QuizSection'
 import VisualizationSection from '@/components/visualization/VisualizationSection'
+import ChatPanel from '@/components/chat/ChatPanel'
 import type { Problem } from '@/types/algorithm'
 
 function getProblemUrl(problem: Problem): string {
@@ -64,6 +65,10 @@ export default function PatternPage() {
     return <div className="text-center text-gray-500 py-12">패턴을 찾을 수 없습니다.</div>
   }
 
+  const patternIndex = category.patterns.findIndex((p) => p.id === pattern.id)
+  const prevPattern = patternIndex > 0 ? category.patterns[patternIndex - 1] : null
+  const nextPattern = patternIndex < category.patterns.length - 1 ? category.patterns[patternIndex + 1] : null
+
   return (
     <div className="max-w-3xl">
       {/* Breadcrumb */}
@@ -76,16 +81,16 @@ export default function PatternPage() {
       </nav>
 
       {/* Header */}
-      <h1 className="text-2xl font-bold text-gray-900 mb-2">{pattern.name}</h1>
+      <div className="flex items-start justify-between gap-3 mb-2">
+        <h1 className="text-2xl font-bold text-gray-900">{pattern.name}</h1>
+        <StudyButton categoryId={category.id} patternId={pattern.id} />
+      </div>
       <p className="text-gray-600 mb-4">{pattern.description}</p>
 
       <div className="flex flex-wrap gap-2 mb-6">
         <ComplexityBadge label="시간" value={pattern.timeComplexity} variant="time" />
         <ComplexityBadge label="공간" value={pattern.spaceComplexity} variant="space" />
       </div>
-
-      {/* Study Button */}
-      <StudyButton categoryId={category.id} patternId={pattern.id} />
 
       {/* Visualization */}
       <VisualizationSection categoryId={category.id} patternId={pattern.id} />
@@ -173,10 +178,52 @@ export default function PatternPage() {
       {/* Related Patterns */}
       <RelatedPatterns categoryId={category.id} patternId={pattern.id} />
 
+      {/* AI Chat */}
+      <ChatPanel
+        categoryId={category.id}
+        patternId={pattern.id}
+        patternContext={{
+          name: pattern.name,
+          description: pattern.description,
+          keyInsight: pattern.keyInsight,
+        }}
+      />
+
       {/* Memo */}
       <section>
         <MemoEditor categoryId={category.id} patternId={pattern.id} />
       </section>
+
+      {/* Prev/Next Navigation */}
+      <nav className="flex items-center justify-between mt-6 pt-6 border-t border-gray-200">
+        {prevPattern ? (
+          <Link
+            href={`/category/${category.id}/${prevPattern.id}`}
+            className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-blue-600 transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+            <span>{prevPattern.name}</span>
+          </Link>
+        ) : (
+          <div />
+        )}
+        <span className="text-xs text-gray-400">{patternIndex + 1} / {category.patterns.length}</span>
+        {nextPattern ? (
+          <Link
+            href={`/category/${category.id}/${nextPattern.id}`}
+            className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-blue-600 transition-colors"
+          >
+            <span>{nextPattern.name}</span>
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+        ) : (
+          <div />
+        )}
+      </nav>
     </div>
   )
 }

@@ -4,6 +4,10 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import type { VisualizationStep } from '@/types/visualization'
 import ArrayVisualization from './ArrayVisualization'
 import GraphVisualization from './GraphVisualization'
+import StackVisualization from './StackVisualization'
+import TableVisualization from './TableVisualization'
+import GridVisualization from './GridVisualization'
+import TreeVisualization from './TreeVisualization'
 
 interface Props {
   steps: VisualizationStep[]
@@ -47,15 +51,30 @@ export default function VisualizationPlayer({ steps }: Props) {
     setCurrentStep(0)
   }
 
+  const renderVisualization = () => {
+    switch (step.type) {
+      case 'array':
+        return <ArrayVisualization step={step} />
+      case 'graph':
+        return <GraphVisualization step={step} />
+      case 'stack':
+        return <StackVisualization step={step} />
+      case 'table':
+        return <TableVisualization step={step} />
+      case 'grid':
+        return <GridVisualization step={step} />
+      case 'tree':
+        return <TreeVisualization step={step} />
+      default:
+        return null
+    }
+  }
+
   return (
     <div>
       {/* Visualization area */}
       <div className="bg-white border border-gray-200 rounded-lg p-4 mb-3 flex justify-center min-h-[250px] items-center">
-        {step.type === 'array' ? (
-          <ArrayVisualization step={step} />
-        ) : (
-          <GraphVisualization step={step} />
-        )}
+        {renderVisualization()}
       </div>
 
       {/* Step message */}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
 import { calculateNextReview } from '@/lib/spaced-repetition'
@@ -6,7 +6,7 @@ import type { Quality } from '@/lib/spaced-repetition'
 import type { StudyRecord } from '@/types/review'
 
 export function useStudyRecord(categoryId: string, patternId: string) {
-  const supabase = createClient()
+  const supabase = useMemo(() => createClient(), [])
   const { user } = useAuth()
   const [record, setRecord] = useState<StudyRecord | null>(null)
   const [loading, setLoading] = useState(true)
@@ -25,10 +25,10 @@ export function useStudyRecord(categoryId: string, patternId: string) {
         setRecord(data as StudyRecord | null)
         setLoading(false)
       })
-  }, [user, categoryId, patternId])
+  }, [user, categoryId, patternId, supabase])
 
   const recordStudy = useCallback(async (quality: Quality) => {
-    if (!user) return
+    if (!user) return { error: new Error('No user') }
     const currentRecord = record ?? {
       review_count: 0,
       interval_days: 1,
@@ -60,17 +60,20 @@ export function useStudyRecord(categoryId: string, patternId: string) {
       .select()
       .single()
 
+    if (error) {
+      console.error('Failed to save study record:', error.message)
+    }
     if (!error && data) {
       setRecord(data as StudyRecord)
     }
     return { error }
-  }, [user, record, categoryId, patternId])
+  }, [user, record, categoryId, patternId, supabase])
 
   return { record, loading, recordStudy }
 }
 
 export function useTodayReviews() {
-  const supabase = createClient()
+  const supabase = useMemo(() => createClient(), [])
   const { user } = useAuth()
   const [records, setRecords] = useState<StudyRecord[]>([])
   const [loading, setLoading] = useState(true)
@@ -87,7 +90,7 @@ export function useTodayReviews() {
 
     setRecords((data as StudyRecord[]) ?? [])
     setLoading(false)
-  }, [user])
+  }, [user, supabase])
 
   useEffect(() => {
     fetchReviews()
