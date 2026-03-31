@@ -27,7 +27,7 @@
     "@types/react-syntax-highlighter": "^15.5.13",
     "@typescript-eslint/eslint-plugin": "^8.58.0",
     "@typescript-eslint/parser": "^8.58.0",
-    "eslint": "^9.39.4",
+    "eslint": "^10.0.0",
     "globals": "^17.4.0",
     "tailwindcss": "^4.1.0",
     "typescript": "~5.7.0"
