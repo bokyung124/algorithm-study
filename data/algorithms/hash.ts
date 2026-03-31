@@ -13,7 +13,7 @@ export const hashCategory: Category = {
       timeComplexity: 'O(n)',
       spaceComplexity: 'O(n)',
       keyInsight: '배열을 순회하면서 "이전에 본 값"을 해시맵에 저장하면 이중 반복문 없이 O(n)에 원하는 쌍을 찾을 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'dict',
           description: '해시맵 자료형으로 O(1) 평균 시간에 조회/삽입/삭제를 수행합니다. get(), setdefault(), items() 메서드를 자주 사용합니다.',
@@ -81,7 +81,7 @@ print(group_anagrams(words))
       timeComplexity: 'O(n)',
       spaceComplexity: 'O(n)',
       keyInsight: '리스트에서 특정 값의 존재 여부를 반복적으로 확인해야 할 때, set으로 변환하면 O(n)에서 O(1)로 조회 시간을 줄일 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'set',
           description: 'O(1) 평균 시간에 in 연산과 중복 제거를 수행합니다. add(), discard(), union(), intersection() 등 집합 연산을 지원합니다.',
@@ -138,7 +138,7 @@ print(longest_consecutive([0, 3, 7, 2, 5, 8, 4, 6, 0, 1]))  # 9`,
       timeComplexity: 'O(n)',
       spaceComplexity: 'O(n)',
       keyInsight: 'Counter를 활용하면 빈도수 기반 정렬, 상위 K개 추출, 빈도수 비교 등을 간결하게 처리할 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'collections.Counter',
           description: '이터러블의 원소 빈도수를 자동으로 세어줍니다. most_common(k)로 상위 k개 추출, Counter끼리 +/- 연산이 가능합니다.',

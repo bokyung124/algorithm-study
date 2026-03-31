@@ -13,7 +13,7 @@ export const geometryCategory: Category = {
       timeComplexity: 'O(1)',
       spaceComplexity: 'O(1)',
       keyInsight: '외적의 부호로 세 점의 방향(시계/반시계/일직선)을 판별합니다. 양수면 반시계, 음수면 시계, 0이면 일직선입니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'tuple',
           description: '좌표를 (x, y) 튜플로 표현하여 점을 다룹니다.',
@@ -65,7 +65,7 @@ print(ccw((0, 0), (2, 2), (4, 4)))   # 0 (일직선)`,
       timeComplexity: 'O(N log N)',
       spaceComplexity: 'O(N)',
       keyInsight: '점들을 정렬한 후 CCW를 이용하여 볼록성을 유지하면서 껍질을 구성합니다. 시계 방향으로 꺾이면 이전 점을 제거하는 것이 핵심입니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'sorted / list.sort',
           description: '점들을 좌표 기준으로 정렬합니다. Andrew 알고리즘은 x좌표, Graham Scan은 기준점 대비 각도로 정렬합니다.',
@@ -131,7 +131,7 @@ print(hull)  # [(0, 3), (1, 1), (5, 1), (4, 4), (2, 5)]`,
       timeComplexity: 'O(1)',
       spaceComplexity: 'O(1)',
       keyInsight: '두 선분 AB, CD에 대해 CCW(A,B,C)×CCW(A,B,D) ≤ 0이고 CCW(C,D,A)×CCW(C,D,B) ≤ 0이면 교차합니다. 일직선 위의 경우는 좌표 범위로 추가 확인합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'tuple',
           description: '좌표를 (x, y) 튜플로 표현하여 선분의 양 끝점을 다룹니다.',

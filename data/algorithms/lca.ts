@@ -13,7 +13,7 @@ export const lcaCategory: Category = {
       timeComplexity: 'O(N) per query',
       spaceComplexity: 'O(N)',
       keyInsight: '두 노드의 깊이를 먼저 동일하게 맞춘 후, 두 노드를 동시에 한 칸씩 올리면서 같은 노드에 도달할 때까지 반복합니다. 같아지는 순간이 LCA입니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'sys.setrecursionlimit',
           description: '깊은 트리에서 DFS로 깊이/부모 정보를 구할 때 재귀 제한을 늘려야 합니다.',
@@ -91,7 +91,7 @@ solve()`,
       timeComplexity: 'O(N log N) 전처리 + O(log N) 쿼리',
       spaceComplexity: 'O(N log N)',
       keyInsight: 'parent[k][v] = v의 2^k번째 조상을 저장하면, 깊이 차이를 이진수로 분해하여 빠르게 올라갈 수 있습니다. 깊이를 맞춘 후에도 이진 탐색처럼 큰 점프부터 시도하며 LCA를 찾습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'math.log2',
           description: '최대 깊이에 대한 log 값을 계산하여 sparse table의 크기를 결정합니다.',

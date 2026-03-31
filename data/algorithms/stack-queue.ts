@@ -16,7 +16,7 @@ export const stackQueue: Category = {
       spaceComplexity: 'O(n)',
       keyInsight:
         '스택은 가장 최근에 넣은 것을 먼저 꺼냅니다. 짝 맞추기(괄호), 되돌리기(undo), 깊이 추적 등의 패턴에 적합합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description:
@@ -121,7 +121,7 @@ print(largest_rectangle([6, 2, 5, 4, 5, 1, 6]))  # 12 (4*3)`,
       spaceComplexity: 'O(n)',
       keyInsight:
         '큐는 먼저 넣은 것을 먼저 꺼냅니다. 순서대로 처리, 대기열, 레벨 순회 등에 적합합니다. deque를 사용하면 양쪽에서 O(1) 연산이 가능합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'collections.deque',
           description:
@@ -210,7 +210,7 @@ print(printer_queue([1, 1, 9, 1, 1, 1], 0))  # 5`,
       spaceComplexity: 'O(n)',
       keyInsight:
         '스택에 원소를 넣기 전에, 스택 꼭대기와 비교하여 단조성을 깨뜨리는 원소들을 pop합니다. pop되는 시점이 곧 "다음 큰/작은 원소"를 만난 시점입니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description:
@@ -311,7 +311,7 @@ print(stock_prices([5, 3, 1, 2, 4]))
       spaceComplexity: 'O(N)',
       keyInsight:
         'collections.deque는 양쪽 끝 연산이 O(1)입니다. 리스트의 왼쪽 삽입/삭제는 O(N)이므로, 왼쪽 연산이 필요하면 반드시 deque를 사용해야 합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'collections.deque',
           description:
@@ -413,7 +413,7 @@ for _ in range(N):
       spaceComplexity: 'O(K) (K = 윈도우 크기)',
       keyInsight:
         '윈도우에서 나갈 원소와 새로 들어올 원소를 덱의 양쪽에서 관리합니다. 새 원소보다 불리한(작거나 큰) 원소를 뒤에서 제거하여 단조성을 유지합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'collections.deque',
           description:

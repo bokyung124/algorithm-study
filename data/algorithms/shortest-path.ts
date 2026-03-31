@@ -16,7 +16,7 @@ export const shortestPathCategory: Category = {
       spaceComplexity: 'O(V + E)',
       keyInsight:
         '아직 확정되지 않은 정점 중 최소 거리인 정점을 선택하고, 그 정점을 통해 인접 정점의 거리를 갱신합니다. 그리디하게 최소부터 확정하므로 음의 가중치가 있으면 동작하지 않습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'heapq',
           description: '최소 힙 기반 우선순위 큐로 다익스트라의 핵심입니다. heappush로 (거리, 노드)를 삽입하고 heappop으로 최소 거리 노드를 O(log N)에 추출합니다.',
@@ -141,7 +141,7 @@ print(' '.join(map(str, path)))`,
       spaceComplexity: 'O(V)',
       keyInsight:
         '최단 경로는 최대 V-1개의 간선을 사용하므로, V-1번 반복하면 모든 최단 거리가 확정됩니다. V번째 반복에서도 갱신이 발생하면 음의 사이클이 존재합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description: '거리 배열을 [INF] * (n+1)로 초기화하고, 간선 리스트를 (u, v, w) 튜플의 리스트로 저장합니다.',
@@ -219,7 +219,7 @@ else:
       spaceComplexity: 'O(V²)',
       keyInsight:
         '"정점 k를 경유하는 것이 더 짧은가?"를 모든 (i, j) 쌍에 대해 검사합니다. k를 1부터 V까지 순서대로 추가하면 최종적으로 모든 경유 가능성이 반영됩니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description: '2차원 거리 행렬을 [[INF] * (n+1) for _ in range(n+1)]로 생성합니다. dist[i][j]가 i에서 j까지의 최단 거리입니다.',

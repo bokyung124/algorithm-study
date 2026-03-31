@@ -29,6 +29,17 @@ import { lcaQuizzes } from './lca-quizzes'
 import { networkFlowQuizzes } from './network-flow-quizzes'
 import { geometryQuizzes } from './geometry-quizzes'
 import { sweepingQuizzes } from './sweeping-quizzes'
+import { searchingQuizzes } from './searching-quizzes'
+import { sqlCteQuizzes } from './sql-cte-quizzes'
+import { sqlStringQuizzes } from './sql-string-quizzes'
+import { sqlDatetimeQuizzes } from './sql-datetime-quizzes'
+import { sqlConditionalQuizzes } from './sql-conditional-quizzes'
+import { sqlSetOpsQuizzes } from './sql-set-ops-quizzes'
+import { sqlSelectQuizzes } from './sql-select-quizzes'
+import { sqlJoinQuizzes } from './sql-join-quizzes'
+import { sqlAggregateQuizzes } from './sql-aggregate-quizzes'
+import { sqlSubqueryQuizzes } from './sql-subquery-quizzes'
+import { sqlWindowQuizzes } from './sql-window-quizzes'
 
 const allQuizzes: Record<string, Record<string, QuizQuestion[]>> = {
   'sorting': sortingQuizzes,
@@ -61,6 +72,17 @@ const allQuizzes: Record<string, Record<string, QuizQuestion[]>> = {
   'network-flow': networkFlowQuizzes,
   'geometry': geometryQuizzes,
   'sweeping': sweepingQuizzes,
+  'searching': searchingQuizzes,
+  'sql-cte': sqlCteQuizzes,
+  'sql-string': sqlStringQuizzes,
+  'sql-datetime': sqlDatetimeQuizzes,
+  'sql-conditional': sqlConditionalQuizzes,
+  'sql-set-ops': sqlSetOpsQuizzes,
+  'sql-select': sqlSelectQuizzes,
+  'sql-join': sqlJoinQuizzes,
+  'sql-aggregate': sqlAggregateQuizzes,
+  'sql-subquery': sqlSubqueryQuizzes,
+  'sql-window': sqlWindowQuizzes,
 }
 
 export function getQuizzes(categoryId: string, patternId: string): QuizQuestion[] {

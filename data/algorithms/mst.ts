@@ -16,7 +16,7 @@ export const mstCategory: Category = {
       spaceComplexity: 'O(V)',
       keyInsight:
         '가장 가벼운 간선부터 탐욕적으로 선택하되, 사이클이 생기는 간선은 건너뜁니다. Union-Find로 두 정점이 이미 같은 집합인지 O(α(N))에 확인하므로, 전체 시간은 간선 정렬에 의해 결정됩니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'sorted / list.sort',
           description: '간선 리스트를 가중치 기준으로 정렬합니다. (가중치, 정점1, 정점2) 튜플로 저장하면 기본 정렬만으로 가중치 오름차순이 됩니다.',
@@ -97,7 +97,7 @@ print(total)`,
       spaceComplexity: 'O(V)',
       keyInsight:
         'MST에 포함된 정점 집합에서 나가는 간선 중 최소 가중치 간선을 선택합니다. 다익스트라와 유사하지만, 거리 갱신 대신 간선 가중치 자체를 비교한다는 점이 다릅니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'heapq',
           description: '최소 힙으로 현재 MST에 연결된 간선 중 최소 가중치 간선을 O(log N)에 추출합니다.',

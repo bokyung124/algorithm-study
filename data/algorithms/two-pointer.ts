@@ -16,7 +16,7 @@ export const twoPointerCategory: Category = {
       spaceComplexity: 'O(1)',
       keyInsight:
         '두 포인터가 각각 최대 N번만 이동하므로 총 O(N)입니다. 핵심은 포인터를 뒤로 되돌리지 않아도 되는 조건(단조성)을 파악하는 것입니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description: '정렬된 배열에서 양쪽 포인터를 이동시키며 탐색합니다. list(map(int, ...))로 입력을 배열로 변환합니다.',
@@ -108,7 +108,7 @@ print(result)  # (1, 5)`,
       spaceComplexity: 'O(1) ~ O(K)',
       keyInsight:
         '윈도우가 한 칸 이동할 때 추가되는 원소와 제거되는 원소만 반영하면 됩니다. 전체를 다시 계산하는 O(NK)를 O(N)으로 줄이는 것이 핵심입니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'collections.defaultdict',
           description: '윈도우 내 원소의 빈도를 관리합니다. 키가 없을 때 자동으로 기본값(int → 0)을 생성하여 빈도 증감이 간편합니다.',
@@ -192,84 +192,6 @@ print(longest_substring_k_distinct(s, k))  # 3 ("ece")`,
         '윈도우 내 상태를 딕셔너리, 카운터, 합 등으로 관리하세요.',
         '원형 배열의 슬라이딩 윈도우는 배열을 두 번 이어 붙이거나 모듈로 연산으로 처리합니다.',
         '최솟값/최댓값을 윈도우에서 빠르게 구하려면 deque(모노톤 큐)를 함께 사용하세요.',
-      ],
-    },
-    {
-      id: 'meet-in-the-middle',
-      name: '중간에서 만나기 (Meet in the Middle)',
-      description:
-        '전체 탐색 공간을 반으로 나누어 각각 탐색한 뒤 결과를 합치는 기법입니다. O(2^N)을 O(2^(N/2))로 줄일 수 있어, N이 40 정도일 때 완전탐색 대신 사용합니다.',
-      timeComplexity: 'O(2^(N/2) × log(2^(N/2))) = O(2^(N/2) × N)',
-      spaceComplexity: 'O(2^(N/2))',
-      keyInsight:
-        '집합을 절반으로 나누고, 한쪽의 모든 부분집합 결과를 미리 구해 정렬한 뒤, 다른 쪽을 순회하며 이분 탐색으로 조건을 만족하는 조합을 찾습니다.',
-      pythonTools: [
-        {
-          name: 'itertools.combinations',
-          description: '부분집합의 합을 생성할 때 조합을 활용할 수 있습니다. 각 크기별 조합을 순회하여 부분집합 합 리스트를 만듭니다.',
-          import: 'from itertools import combinations',
-        },
-        {
-          name: 'bisect',
-          description: '한쪽 부분집합 합을 정렬한 뒤 bisect_left/bisect_right로 목표 값의 개수를 O(log N)에 구합니다.',
-          import: 'from bisect import bisect_left, bisect_right',
-        },
-      ],
-      codeExamples: [
-        {
-          title: '부분집합의 합이 S인 경우의 수 (BOJ 1208)',
-          code: `import sys
-from bisect import bisect_left, bisect_right
-input = sys.stdin.readline
-
-def get_all_subset_sums(arr):
-    """배열의 모든 부분집합 합을 반환"""
-    sums = [0]
-    for x in arr:
-        sums += [s + x for s in sums]
-    return sums
-
-n, s = map(int, input().split())
-arr = list(map(int, input().split()))
-
-# 배열을 반으로 나눔
-mid = n // 2
-left_arr = arr[:mid]
-right_arr = arr[mid:]
-
-# 각각의 모든 부분집합 합 구하기
-left_sums = get_all_subset_sums(left_arr)
-right_sums = get_all_subset_sums(right_arr)
-
-# 오른쪽을 정렬
-right_sums.sort()
-
-count = 0
-for ls in left_sums:
-    # right에서 s - ls인 값의 개수
-    target = s - ls
-    count += bisect_right(right_sums, target) - bisect_left(right_sums, target)
-
-# 공집합 제외 (합이 0인 공집합+공집합 조합)
-if s == 0:
-    count -= 1
-
-print(count)`,
-          explanation:
-            '배열을 절반으로 나누어 각각 모든 부분집합 합을 구합니다 (각 2^(N/2)개). 왼쪽의 각 합 ls에 대해 오른쪽에서 S - ls인 값의 개수를 이분 탐색으로 셉니다. 공집합(합=0)을 양쪽 모두 고른 경우를 S=0일 때 1 빼줍니다.',
-        },
-      ],
-      commonProblems: [
-        { name: '부분수열의 합 2', platform: 'boj', id: '1208' },
-        { name: '합이 0인 네 정수', platform: 'boj', id: '7453' },
-        { name: '냅색문제', platform: 'boj', id: '1450' },
-        { name: 'Trapping Rain Water', platform: 'leetcode', id: '42', slug: 'trapping-rain-water', difficulty: 'Hard' },
-      ],
-      tips: [
-        'N이 20 이하면 완전탐색, 40 이하면 Meet in the Middle을 고려하세요.',
-        '부분집합 합을 구할 때 비트마스크 또는 재귀를 사용할 수 있습니다.',
-        '한쪽을 정렬 후 이분 탐색하거나, Counter/딕셔너리로 O(1) 조회하는 방법도 있습니다.',
-        '공집합 처리에 주의하세요. 문제에 따라 공집합을 포함/제외해야 할 수 있습니다.',
       ],
     },
   ],

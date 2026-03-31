@@ -13,7 +13,7 @@ export const stringCategory: Category = {
       timeComplexity: 'O(n + m)',
       spaceComplexity: 'O(m)',
       keyInsight: '실패 함수 pi[i]는 패턴의 0~i 부분 문자열에서 접두사와 접미사가 일치하는 최대 길이입니다. 불일치 시 이 값만큼 건너뛰어 불필요한 비교를 제거합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description: '실패 함수(LPS) 테이블을 저장하는 배열로 사용합니다. [0] * m으로 초기화하여 패턴 길이만큼 생성합니다.',
@@ -101,7 +101,7 @@ print(kmp_search(text2, pattern2))  # [0, 1, 2, 3]`,
       timeComplexity: 'O(n + m) 평균, O(nm) 최악',
       spaceComplexity: 'O(1)',
       keyInsight: '슬라이딩 윈도우로 해시를 갱신하면 O(1)에 새로운 부분 문자열의 해시를 계산할 수 있습니다. 해시 충돌 시에만 실제 비교를 수행합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'hash()',
           description: '롤링 해시 개념의 기초가 되는 내장 해시 함수입니다. 실제 구현에서는 다항식 해시를 직접 계산하여 충돌을 제어합니다.',
@@ -178,7 +178,7 @@ print(rabin_karp("hello world", "world"))  # [6]`,
       timeComplexity: 'O(L) (L: 문자열 길이)',
       spaceComplexity: 'O(N * L) (N: 문자열 수)',
       keyInsight: '각 노드가 한 문자를 담당하며, 루트에서 특정 노드까지의 경로가 하나의 접두사를 나타냅니다. 딕셔너리로 자식을 관리하면 구현이 간결합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'dict',
           description: '각 트라이 노드의 자식을 딕셔너리로 표현합니다. children[char]로 자식 노드에 접근하며, in 연산자로 자식 존재 여부를 O(1)에 확인합니다.',
@@ -331,7 +331,7 @@ print(ac.suggest("xyz"))     # []`,
       timeComplexity: 'O(N) (전처리), O(1) (부분 문자열 해시 쿼리)',
       spaceComplexity: 'O(N)',
       keyInsight: '문자열을 다항식 해시로 변환합니다: hash = s[0]*p^(n-1) + s[1]*p^(n-2) + ... + s[n-1]. 접두사 해시 배열을 미리 구해두면 임의 부분 문자열의 해시를 O(1)에 구할 수 있습니다. 해시 충돌을 줄이려면 이중 해싱을 사용합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'pow()',
           description: 'pow(base, exp, mod)로 모듈러 거듭제곱을 O(log N)에 계산합니다.',

@@ -13,7 +13,7 @@ export const mathCategory: Category = {
       timeComplexity: 'O(N log log N)',
       spaceComplexity: 'O(N)',
       keyInsight: '각 소수의 배수를 순서대로 지워나가면, 지워지지 않고 남은 수가 소수입니다. 소수 p의 배수를 지울 때 p*p부터 시작하면 중복 작업을 줄일 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description: '에라토스테네스의 체에서 [True] * (n+1)로 bool 배열을 생성합니다. 인덱스가 곧 숫자를 나타내어 소수 여부를 표시합니다.',
@@ -103,7 +103,7 @@ print(factorize(97, spf))   # {97: 1} (소수)`,
       timeComplexity: 'O(log(min(a, b)))',
       spaceComplexity: 'O(1)',
       keyInsight: 'GCD(a, b) = GCD(b, a % b)라는 성질을 반복 적용합니다. LCM은 a * b // GCD(a, b)로 구합니다. 확장 유클리드 알고리즘으로 모듈러 역원도 구할 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'math.gcd / math.lcm',
           description: 'GCD/LCM을 내장 함수로 바로 계산합니다. Python 3.9+에서는 여러 인자를 지원합니다: math.gcd(a, b, c).',
@@ -186,9 +186,8 @@ print(c + d)  # 23/20`,
         { name: 'GCD of Strings', platform: 'leetcode', id: '1071', slug: 'greatest-common-divisor-of-strings', difficulty: 'Easy' },
         { name: '최대공약수와 최소공배수', platform: 'boj', id: '2609' },
         { name: '분수 합 구하기', platform: 'boj', id: '1735' },
-        { name: 'N개 수의 최소공배수', platform: 'boj', id: '2609' },
-        { name: '유클리드 호제법 응용', platform: 'boj', id: '3955' },
-        { name: '디오판토스 방정식', platform: 'boj', id: '3955' },
+        { name: 'N개 수의 최소공배수', platform: 'boj', id: '1934' },
+        { name: '캔디 분배 (확장 유클리드)', platform: 'boj', id: '3955' },
       ],
       tips: [
         'Python 3.9+에서는 math.gcd가 여러 인자를 지원합니다: math.gcd(a, b, c).',
@@ -203,7 +202,7 @@ print(c + d)  # 23/20`,
       timeComplexity: 'O(log n) (거듭제곱)',
       spaceComplexity: 'O(1) ~ O(n) (팩토리얼 전처리)',
       keyInsight: '(a + b) % m = ((a % m) + (b % m)) % m, (a * b) % m = ((a % m) * (b % m)) % m 입니다. 나눗셈은 모듈러 역원을 곱하는 것으로 대체합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'pow(base, exp, mod)',
           description: 'Python 내장 3인자 pow로 모듈러 거듭제곱을 O(log n)에 계산합니다. C로 구현되어 직접 구현보다 빠릅니다.',
@@ -278,7 +277,7 @@ print(nCr(5, 6, fact, inv_fact))     # 0`,
       commonProblems: [
         { name: 'Pow(x, n)', platform: 'leetcode', id: '50', slug: 'powx-n', difficulty: 'Medium' },
         { name: '조합의 수 구하기 (nCr mod p)', platform: 'boj', id: '11401' },
-        { name: '이항 계수', platform: 'boj', id: '11401' },
+        { name: '이항 계수', platform: 'boj', id: '11051' },
         { name: '행렬 거듭제곱으로 피보나치 구하기', platform: 'boj', id: '11444' },
         { name: '카탈란 수', platform: 'boj', id: '1670' },
         { name: '경우의 수 세기 문제', platform: 'boj', id: '11051' },

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
 
@@ -10,7 +10,7 @@ interface MemoEditorProps {
 }
 
 export default function MemoEditor({ categoryId, patternId }: MemoEditorProps) {
-  const supabase = createClient()
+  const supabase = useMemo(() => createClient(), [])
   const { user } = useAuth()
   const [content, setContent] = useState('')
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
@@ -31,7 +31,7 @@ export default function MemoEditor({ categoryId, patternId }: MemoEditorProps) {
         if (data) setContent(data.content)
         setLoading(false)
       })
-  }, [user, categoryId, patternId])
+  }, [user, categoryId, patternId, supabase])
 
   const saveMemo = useCallback(async (text: string) => {
     if (!user) return
@@ -46,7 +46,7 @@ export default function MemoEditor({ categoryId, patternId }: MemoEditorProps) {
       { onConflict: 'user_id,category_id,pattern_id' }
     )
     setSaveStatus(error ? 'error' : 'saved')
-  }, [user, categoryId, patternId])
+  }, [user, categoryId, patternId, supabase])
 
   const handleChange = (text: string) => {
     setContent(text)

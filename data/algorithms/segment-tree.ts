@@ -16,7 +16,7 @@ export const segmentTreeCategory: Category = {
       spaceComplexity: 'O(N)',
       keyInsight:
         '배열을 완전 이진 트리로 표현하면 부모-자식 관계를 인덱스 연산(2*i, 2*i+1)으로 빠르게 접근할 수 있고, 구간을 절반씩 나누어 재귀적으로 처리합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description: '세그먼트 트리 배열을 4*N 크기로 생성하여 노드 값을 저장하는 데 사용합니다. [0] * (4 * n)으로 초기화합니다.',
@@ -172,7 +172,7 @@ for _ in range(m):
       spaceComplexity: 'O(N)',
       keyInsight:
         '구간 업데이트 시 해당 노드에 lazy 값을 저장해 두고, 나중에 그 노드를 방문할 때 자식 노드로 전파합니다. 이렇게 하면 매번 리프까지 내려가지 않아도 됩니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description: 'lazy 배열과 트리 배열을 각각 4*N 크기로 생성합니다. lazy 배열은 지연된 업데이트 값을 저장합니다.',
@@ -285,7 +285,7 @@ for _ in range(m + k):
       spaceComplexity: 'O(N)',
       keyInsight:
         '인덱스의 최하위 비트(lowbit = i & -i)를 이용하여 트리 구조를 구성합니다. 업데이트는 인덱스에 lowbit를 더하며 올라가고, 쿼리는 lowbit를 빼며 내려갑니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description: '1-indexed 배열로 펜윅 트리를 구성합니다. [0] * (n + 1)로 초기화하여 인덱스 1부터 사용합니다.',
@@ -367,9 +367,9 @@ for _ in range(m + k):
         },
       ],
       commonProblems: [
-        { name: '구간 합 구하기', platform: 'boj', id: '2042' },
+        { name: '나머지 합', platform: 'boj', id: '10986' },
         { name: 'LCA 2', platform: 'boj', id: '11438' },
-        { name: 'Range Sum Query - Mutable', platform: 'leetcode', id: '307', slug: 'range-sum-query-mutable', difficulty: 'Medium' },
+        { name: '역순서쌍의 수', platform: 'boj', id: '7578' },
       ],
       tips: [
         '펜윅 트리는 반드시 1-indexed를 사용해야 합니다. 0-indexed로 하면 i & (-i)가 0이 되어 무한 루프에 빠집니다.',

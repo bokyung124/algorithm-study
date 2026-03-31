@@ -16,7 +16,7 @@ export const backtrackingCategory: Category = {
       spaceComplexity: 'O(N)',
       keyInsight:
         '한 행에 퀸은 하나만 놓을 수 있으므로 행별로 열을 선택합니다. 열, 왼쪽 대각선(row-col), 오른쪽 대각선(row+col)의 사용 여부를 집합으로 관리하면 O(1)에 충돌을 검사할 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description: '체스판 상태를 배열로 관리합니다. 각 행에 퀸이 놓인 열 번호를 저장하는 1차원 배열로 충분합니다.',
@@ -90,7 +90,7 @@ print(solve_n_queens(n))`,
       spaceComplexity: 'O(N) (재귀 깊이)',
       keyInsight:
         '순열은 사용 여부를 체크하며 모든 위치를 순회하고, 조합은 시작 인덱스를 증가시켜 중복을 방지합니다. 가지치기 조건을 추가하면 탐색 공간을 대폭 줄일 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'itertools.permutations / itertools.combinations',
           description: '가지치기가 불필요한 경우 내장 함수로 순열/조합을 간결하게 생성할 수 있습니다. permutations(arr, r), combinations(arr, r)로 사용합니다.',
@@ -206,7 +206,7 @@ solve()`,
       spaceComplexity: 'O(빈칸수) (재귀 깊이)',
       keyInsight:
         '행, 열, 박스별로 사용된 숫자를 집합이나 비트마스크로 관리하면 O(1)에 제약 조건을 검사할 수 있습니다. 빈 칸이 적은 행/열부터 채우면 가지치기 효과가 극대화됩니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description: '9x9 보드를 2차원 리스트로 표현하고, 빈 칸 좌표를 리스트로 관리합니다.',

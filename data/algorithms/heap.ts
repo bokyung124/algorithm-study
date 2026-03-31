@@ -13,7 +13,7 @@ export const heapCategory: Category = {
       timeComplexity: 'O(log N)',
       spaceComplexity: 'O(N)',
       keyInsight: 'heapq는 최소 힙만 지원하므로 최대 힙이 필요할 때는 값에 -1을 곱하여 삽입하고 꺼낼 때 다시 -1을 곱합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'heapq',
           description: '최소 힙을 제공하는 모듈입니다. heappush(), heappop(), heapify(), nsmallest(), nlargest() 함수를 제공합니다.',
@@ -81,7 +81,7 @@ print(-heapq.heappop(max_heap))  # 5`,
       timeComplexity: 'O(N log K)',
       spaceComplexity: 'O(K)',
       keyInsight: '가장 큰 K개를 찾을 때는 크기 K의 최소 힙을 유지합니다. 새 원소가 힙의 최솟값보다 크면 교체하여 항상 상위 K개만 남깁니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'heapq.nlargest',
           description: '이터러블에서 가장 큰 N개의 원소를 반환합니다. key 함수를 지정할 수 있습니다.',
@@ -148,7 +148,7 @@ print(top_k_frequent([1], 1))  # [1]`,
       timeComplexity: 'O(log N) per operation',
       spaceComplexity: 'O(N)',
       keyInsight: '작은 절반은 최대 힙, 큰 절반은 최소 힙에 저장하면 두 힙의 루트에서 중앙값을 O(1)에 구할 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'heapq (이중 힙)',
           description: '최대 힙(부호 반전)과 최소 힙을 조합하여 중앙값, 이중 우선순위 큐 등을 구현합니다.',

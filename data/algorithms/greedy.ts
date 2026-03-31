@@ -16,7 +16,7 @@ export const greedy: Category = {
       spaceComplexity: 'O(n)',
       keyInsight:
         '종료 시간이 빠른 활동을 먼저 선택하면, 남은 시간에 더 많은 활동을 배치할 수 있습니다. 종료 시간 기준 정렬이 핵심입니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'sorted()',
           description:
@@ -115,7 +115,7 @@ print(min_rooms(lectures))  # 2`,
       spaceComplexity: 'O(n)',
       keyInsight:
         '각 물건의 단위 무게당 가치(가치/무게)를 계산하여 내림차순으로 정렬합니다. 가성비가 높은 물건부터 최대한 담고, 남은 용량만큼 다음 물건을 쪼개서 담습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'sorted()',
           description:
@@ -186,7 +186,7 @@ print(fractional_knapsack(items, capacity))  # 240.0`,
       spaceComplexity: 'O(1)',
       keyInsight:
         '가장 큰 동전부터 최대한 많이 사용합니다. 한국 화폐(500, 100, 50, 10)처럼 배수 관계가 성립할 때만 그리디가 최적해를 보장합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description:

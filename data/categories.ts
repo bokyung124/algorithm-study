@@ -1,5 +1,18 @@
 import type { Category, Pattern } from '@/types/algorithm'
 
+import {
+  sqlSelect,
+  sqlJoin,
+  sqlAggregate,
+  sqlSubquery,
+  sqlWindow,
+  sqlCte,
+  sqlString,
+  sqlDatetime,
+  sqlConditional,
+  sqlSetOps,
+} from '@/data/sql'
+
 import { sorting } from '@/data/algorithms/sorting'
 import { searching } from '@/data/algorithms/searching'
 import { dp } from '@/data/algorithms/dp'
@@ -34,31 +47,31 @@ import { sweepingCategory } from '@/data/algorithms/sweeping'
 
 export const categories: Category[] = [
   sorting,
+  bruteForceCategory,
+  simulationCategory,
+  implementation,
+  hashCategory,
+  stackQueue,
+  heapCategory,
+  prefixSumCategory,
+  twoPointerCategory,
+  binarySearchCategory,
   searching,
   dp,
   graph,
   greedy,
-  implementation,
-  stackQueue,
-  hashCategory,
-  binarySearchCategory,
   treeCategory,
   stringCategory,
   mathCategory,
   bitmaskCategory,
   segmentTreeCategory,
   unionFindCategory,
-  twoPointerCategory,
   backtrackingCategory,
   shortestPathCategory,
   topologicalSortCategory,
   trieCategory,
   mstCategory,
-  heapCategory,
-  prefixSumCategory,
   divideAndConquerCategory,
-  simulationCategory,
-  bruteForceCategory,
   coordinateCompressionCategory,
   lcaCategory,
   networkFlowCategory,
@@ -66,8 +79,23 @@ export const categories: Category[] = [
   sweepingCategory,
 ]
 
+export const sqlCategories: Category[] = [
+  sqlSelect,
+  sqlJoin,
+  sqlAggregate,
+  sqlSubquery,
+  sqlWindow,
+  sqlCte,
+  sqlString,
+  sqlDatetime,
+  sqlConditional,
+  sqlSetOps,
+]
+
+export const allCategories: Category[] = [...categories, ...sqlCategories]
+
 export function getCategoryById(id: string): Category | undefined {
-  return categories.find((c) => c.id === id)
+  return allCategories.find((c) => c.id === id)
 }
 
 export function getPatternById(categoryId: string, patternId: string): Pattern | undefined {

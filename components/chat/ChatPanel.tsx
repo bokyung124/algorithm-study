@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/contexts/AuthContext'
@@ -17,7 +17,7 @@ interface ChatPanelProps {
 }
 
 export default function ChatPanel({ categoryId, patternId, patternContext }: ChatPanelProps) {
-  const supabase = createClient()
+  const supabase = useMemo(() => createClient(), [])
   const { user } = useAuth()
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState('')

@@ -16,7 +16,7 @@ export const bruteForceCategory: Category = {
       spaceComplexity: 'O(N)',
       keyInsight:
         '완전 탐색은 "모든 경우를 다 해본다"는 가장 단순한 접근입니다. N ≤ 20이면 2^N, N ≤ 10이면 N!도 충분합니다. 시간복잡도를 먼저 계산하여 가능한지 판단하세요.',
-      pythonTools: [
+      tools: [
         {
           name: 'for 중첩 반복문',
           description: '2~4중 반복문으로 모든 조합을 시도합니다. N이 작으면 가장 직관적인 방법입니다.',
@@ -71,7 +71,7 @@ print(best)`,
       spaceComplexity: 'O(N)',
       keyInsight:
         '순열은 순서가 중요한 선택, 조합은 순서가 중요하지 않은 선택입니다. Python의 itertools 모듈을 사용하면 간결하게 구현할 수 있고, 직접 구현하면 가지치기를 추가할 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'itertools.permutations',
           description: '주어진 iterable에서 r개를 뽑아 순열을 생성합니다.',
@@ -138,7 +138,7 @@ solve()
       spaceComplexity: 'O(N)',
       keyInsight:
         'N개 원소의 부분집합은 0부터 2^N - 1까지의 정수와 1:1 대응됩니다. i번째 비트가 1이면 i번째 원소를 포함합니다. 비트 연산으로 빠르게 포함 여부를 검사할 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: '비트 연산자',
           description: '&(AND), |(OR), ^(XOR), <<(왼쪽 시프트), >>(오른쪽 시프트)를 사용합니다.',

@@ -16,7 +16,7 @@ export const coordinateCompressionCategory: Category = {
       spaceComplexity: 'O(N)',
       keyInsight:
         '값의 절대적인 크기는 무시하고 상대적 순서만 보존하면 되므로, 정렬 후 중복 제거한 배열에서의 위치(인덱스)가 곧 압축된 좌표가 됩니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'sorted / set',
           description: '좌표를 정렬하고 중복을 제거하여 고유한 좌표 목록을 만듭니다. sorted(set(arr))로 간단히 구현합니다.',
@@ -94,7 +94,7 @@ print(' '.join(map(str, result)))`,
       spaceComplexity: 'O(N)',
       keyInsight:
         '좌표를 압축하면 값의 범위가 최대 N이 되므로, 크기 N의 세그먼트 트리나 BIT를 만들어 효율적으로 구간 쿼리를 처리할 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'sorted / set / bisect_left',
           description: '좌표 압축을 위해 정렬, 중복 제거, 이진 탐색을 사용합니다.',

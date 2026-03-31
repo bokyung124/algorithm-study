@@ -1,8 +1,5 @@
-'use client'
-
-import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import { getCategoryById } from '@/data/categories'
+import { getCategoryById, allCategories } from '@/data/categories'
 import CodeBlock from '@/components/algorithm/CodeBlock'
 import ComplexityBadge from '@/components/algorithm/ComplexityBadge'
 import MemoEditor from '@/components/memo/MemoEditor'
@@ -12,6 +9,14 @@ import QuizSection from '@/components/quiz/QuizSection'
 import VisualizationSection from '@/components/visualization/VisualizationSection'
 import ChatPanel from '@/components/chat/ChatPanel'
 import type { Problem } from '@/types/algorithm'
+
+type Props = { params: Promise<{ categoryId: string; patternId: string }> }
+
+export async function generateStaticParams() {
+  return allCategories.flatMap((c) =>
+    c.patterns.map((p) => ({ categoryId: c.id, patternId: p.id }))
+  )
+}
 
 function getProblemUrl(problem: Problem): string {
   switch (problem.platform) {
@@ -56,10 +61,10 @@ function PlatformBadge({ problem }: { problem: Problem }) {
   )
 }
 
-export default function PatternPage() {
-  const params = useParams<{ categoryId: string; patternId: string }>()
-  const category = getCategoryById(params.categoryId ?? '')
-  const pattern = category?.patterns.find((p) => p.id === params.patternId)
+export default async function PatternPage({ params }: Props) {
+  const { categoryId, patternId } = await params
+  const category = getCategoryById(categoryId)
+  const pattern = category?.patterns.find((p) => p.id === patternId)
 
   if (!category || !pattern) {
     return <div className="text-center text-gray-500 py-12">패턴을 찾을 수 없습니다.</div>
@@ -101,12 +106,14 @@ export default function PatternPage() {
         <p className="text-sm text-blue-700">{pattern.keyInsight}</p>
       </div>
 
-      {/* Python Tools */}
-      {pattern.pythonTools.length > 0 && (
+      {/* Tools */}
+      {pattern.tools.length > 0 && (
         <section className="mb-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-3">Python 필수 도구</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-3">
+            {category.toolsLabel ?? 'Python 필수 도구'}
+          </h2>
           <div className="grid gap-3 sm:grid-cols-2">
-            {pattern.pythonTools.map((tool, i) => (
+            {pattern.tools.map((tool, i) => (
               <div key={i} className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
                 <div className="font-mono text-sm font-semibold text-emerald-800 mb-1">{tool.name}</div>
                 <code className="block text-xs text-emerald-600 bg-emerald-100 rounded px-2 py-1 mb-2">{tool.import}</code>

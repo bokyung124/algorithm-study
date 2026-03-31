@@ -4,11 +4,12 @@ export interface CodeExample {
   explanation: string
 }
 
-export interface PythonTool {
+export interface Tool {
   name: string
   description: string
   import: string
 }
+
 
 export interface Problem {
   name: string
@@ -25,7 +26,7 @@ export interface Pattern {
   timeComplexity: string
   spaceComplexity: string
   keyInsight: string
-  pythonTools: PythonTool[]
+  tools: Tool[]
   codeExamples: CodeExample[]
   commonProblems: Problem[]
   tips: string[]
@@ -37,4 +38,6 @@ export interface Category {
   icon: string
   description: string
   patterns: Pattern[]
+  subject?: 'algorithm' | 'sql'
+  toolsLabel?: string
 }

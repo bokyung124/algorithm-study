@@ -16,7 +16,7 @@ export const divideAndConquerCategory: Category = {
       spaceComplexity: 'O(log n)',
       keyInsight:
         '문제를 절반으로 나누면 재귀 깊이가 O(log n)이 되고, 각 레벨에서 O(n) 작업을 하면 전체 O(n log n)이 됩니다. 분할은 쉽지만 합치는(merge) 과정을 잘 설계해야 합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list slicing',
           description: '배열을 절반으로 나눌 때 arr[:mid], arr[mid:]로 간결하게 분할할 수 있습니다.',
@@ -88,7 +88,7 @@ print(result)`,
       spaceComplexity: 'O(log N)',
       keyInsight:
         'a^n = (a^(n/2))^2 (n이 짝수), a^n = a × a^(n-1) (n이 홀수). 지수를 절반씩 줄이므로 O(log N)에 계산됩니다. 큰 수의 거듭제곱은 반드시 모듈러 연산과 함께 사용해야 합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'pow(a, b, mod)',
           description: 'Python 내장 pow 함수는 세 번째 인자로 모듈러를 받아 빠른 거듭제곱을 수행합니다.',
@@ -153,7 +153,7 @@ print(power(a, b, c))
       spaceComplexity: 'O(n)',
       keyInsight:
         '점들을 x좌표로 정렬 후 절반으로 나누어 각각의 최소 거리를 구하고, 경계 영역(strip)에서의 최소 거리를 확인합니다. strip 내에서 y좌표 차이가 d 미만인 점만 비교하면 최대 6~7개만 확인하면 됩니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'math.dist / math.sqrt',
           description: '두 점 사이의 유클리드 거리를 계산합니다.',
@@ -220,6 +220,78 @@ print(closest_pair(points))`,
         'strip 내에서 y좌표 차이가 d 이상이면 즉시 루프를 종료하세요.',
         'base case를 n ≤ 3으로 설정하면 안정적입니다.',
         '정렬을 매번 하면 O(n log² n)이 되므로, y좌표 정렬을 미리 해두면 O(n log n)을 보장합니다.',
+      ],
+    },
+    {
+      id: 'meet-in-the-middle',
+      name: '중간에서 만나기 (Meet in the Middle)',
+      description:
+        '전체 탐색 공간을 반으로 나누어 각각 탐색한 뒤 결과를 합치는 기법입니다. O(2^N)을 O(2^(N/2))로 줄일 수 있어, N이 40 정도일 때 완전탐색 대신 사용합니다.',
+      timeComplexity: 'O(2^(N/2) × N)',
+      spaceComplexity: 'O(2^(N/2))',
+      keyInsight:
+        '집합을 절반으로 나누고, 한쪽의 모든 부분집합 결과를 미리 구해 정렬한 뒤, 다른 쪽을 순회하며 이분 탐색으로 조건을 만족하는 조합을 찾습니다.',
+      tools: [
+        {
+          name: 'bisect',
+          description:
+            '한쪽 부분집합 합을 정렬한 뒤 bisect_left/bisect_right로 목표 값의 개수를 O(log N)에 구합니다.',
+          import: 'from bisect import bisect_left, bisect_right',
+        },
+      ],
+      codeExamples: [
+        {
+          title: '부분집합의 합이 S인 경우의 수 (BOJ 1208)',
+          code: `import sys
+from bisect import bisect_left, bisect_right
+input = sys.stdin.readline
+
+def get_all_subset_sums(arr):
+    """배열의 모든 부분집합 합을 반환"""
+    sums = [0]
+    for x in arr:
+        sums += [s + x for s in sums]
+    return sums
+
+n, s = map(int, input().split())
+arr = list(map(int, input().split()))
+
+# 배열을 반으로 나눔
+mid = n // 2
+left_arr = arr[:mid]
+right_arr = arr[mid:]
+
+# 각각의 모든 부분집합 합 구하기
+left_sums = get_all_subset_sums(left_arr)
+right_sums = get_all_subset_sums(right_arr)
+
+# 오른쪽을 정렬
+right_sums.sort()
+
+count = 0
+for ls in left_sums:
+    # right에서 s - ls인 값의 개수
+    target = s - ls
+    count += bisect_right(right_sums, target) - bisect_left(right_sums, target)
+
+# 공집합 제외 (합이 0인 공집합+공집합 조합)
+if s == 0:
+    count -= 1
+
+print(count)`,
+          explanation:
+            '배열을 절반으로 나누어 각각 모든 부분집합 합을 구합니다 (각 2^(N/2)개). 왼쪽의 각 합 ls에 대해 오른쪽에서 S - ls인 값의 개수를 이분 탐색으로 셉니다. 공집합(합=0)을 양쪽 모두 고른 경우를 S=0일 때 1 빼줍니다.',
+        },
+      ],
+      commonProblems: [
+        { name: '부분수열의 합 2', platform: 'boj', id: '1208' },
+        { name: '합이 0인 네 정수', platform: 'boj', id: '7453' },
+        { name: '냅색문제', platform: 'boj', id: '1450' },
+      ],
+      tips: [
+        'N이 20 이하면 완전탐색, 40 이하면 Meet in the Middle을 고려하세요.',
+        '한쪽을 정렬 후 이분 탐색하거나, Counter/딕셔너리로 O(1) 조회하는 방법도 있습니다.',
+        '공집합 처리에 주의하세요. 문제에 따라 공집합을 포함/제외해야 할 수 있습니다.',
       ],
     },
   ],

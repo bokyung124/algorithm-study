@@ -13,7 +13,7 @@ export const trieCategory: Category = {
       timeComplexity: 'O(L) per operation (L=문자열 길이)',
       spaceComplexity: 'O(총 문자 수)',
       keyInsight: '딕셔너리로 자식 노드를 관리하면 각 연산(insert, search, startsWith)이 문자열 길이 L에만 비례합니다. is_end 플래그로 완전한 단어의 끝을 표시합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'dict',
           description: '각 트라이 노드의 자식을 딕셔너리로 표현합니다. children[char]로 자식 노드에 접근하며, in 연산자로 자식 존재 여부를 O(1)에 확인합니다.',
@@ -94,7 +94,7 @@ print(trie.startsWith("ban"))    # False`,
       timeComplexity: 'O(L + K) (L=접두사 길이, K=결과 수)',
       spaceComplexity: 'O(총 문자 수)',
       keyInsight: '접두사에 해당하는 노드를 O(L)에 찾은 뒤, 그 하위 트리를 DFS로 탐색하여 is_end인 노드까지의 경로를 모두 수집합니다. sorted()로 자식을 순회하면 사전순 결과를 보장합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'dict',
           description: '트라이 노드의 자식을 저장합니다. sorted(node.children)으로 사전순 탐색이 가능합니다.',

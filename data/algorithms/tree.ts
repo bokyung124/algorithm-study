@@ -13,7 +13,7 @@ export const treeCategory: Category = {
       timeComplexity: 'O(n)',
       spaceComplexity: 'O(n) (재귀 스택 또는 큐)',
       keyInsight: '전위는 루트를 먼저, 중위는 중간에, 후위는 마지막에 처리합니다. 후위 순회는 자식 결과를 합산할 때, 레벨 순회는 깊이별 처리가 필요할 때 사용합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'collections.deque',
           description: '레벨 순회(BFS)에서 큐로 사용합니다. popleft()가 O(1)이므로 list의 pop(0) O(n)보다 훨씬 효율적입니다.',
@@ -117,7 +117,7 @@ print(max_depth(root))  # 3`,
       timeComplexity: 'O(log n) 평균, O(n) 최악',
       spaceComplexity: 'O(n)',
       keyInsight: 'BST의 중위 순회 결과는 항상 오름차순으로 정렬되어 있습니다. 이 성질을 이용하면 유효성 검증, k번째 원소 찾기 등을 효율적으로 풀 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'bisect',
           description: '정렬된 리스트로 BST를 시뮬레이션할 때 삽입 위치를 O(log n)에 찾습니다. insort()로 정렬 유지하며 삽입할 수 있습니다.',
@@ -221,7 +221,7 @@ print(kth_smallest(root, 3))  # 3`,
       timeComplexity: 'O(n)',
       spaceComplexity: 'O(n)',
       keyInsight: '트리 DP는 리프 노드에서 시작하여 루트로 올라가며(후위 순회) 각 노드에서 자식 결과를 조합합니다. 인접 리스트와 DFS로 구현합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'sys.setrecursionlimit',
           description: '트리 DP는 깊은 재귀를 사용하므로 노드 수 + 여유분으로 재귀 제한을 설정해야 합니다.',

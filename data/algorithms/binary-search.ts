@@ -13,7 +13,7 @@ export const binarySearchCategory: Category = {
       timeComplexity: 'O(log n)',
       spaceComplexity: 'O(1)',
       keyInsight: 'lo는 항상 "조건 미달" 영역, hi는 항상 "조건 충족" 영역을 가리키도록 유지하면 반복문 종료 시 lo가 정확한 경계를 가리킵니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'bisect.bisect_left',
           description: '정렬된 리스트에서 값이 삽입될 가장 왼쪽 위치를 O(log n)에 반환합니다. Lower Bound와 동일한 동작입니다.',
@@ -87,7 +87,7 @@ print(find_closest(arr, 5))       # 4`,
       timeComplexity: 'O(log n)',
       spaceComplexity: 'O(1)',
       keyInsight: 'Upper Bound는 target 이하인 마지막 원소 바로 다음 위치입니다. Lower Bound와 조합하면 특정 범위 [a, b]에 속하는 원소의 개수를 O(log n)에 구할 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'bisect.bisect_right',
           description: '정렬된 리스트에서 값이 삽입될 가장 오른쪽 위치를 O(log n)에 반환합니다. Upper Bound와 동일한 동작입니다.',
@@ -139,7 +139,7 @@ print(count_in_range(arr, 2, 7))    # 5 (2,4,4,4,7)`,
       timeComplexity: 'O(n log X) (X는 탐색 범위)',
       spaceComplexity: 'O(1)',
       keyInsight: '"최솟값의 최댓값" 또는 "최댓값의 최솟값" 형태의 문제는 답을 고정하고 조건 충족 여부를 판단하는 결정 함수를 만들어 이진탐색합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'bisect',
           description: '결정 함수와 조합하여 정렬된 탐색 공간에서 경계값을 찾는 패턴에 활용합니다. bisect_left/bisect_right로 커스텀 조건의 경계를 탐색할 수 있습니다.',

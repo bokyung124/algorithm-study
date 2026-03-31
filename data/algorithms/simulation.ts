@@ -16,7 +16,7 @@ export const simulationCategory: Category = {
       spaceComplexity: 'O(varies)',
       keyInsight:
         '문제를 작은 단계로 나누어 각 단계를 함수로 구현하면 관리하기 쉽습니다. 경계 조건과 예외 처리를 빠뜨리지 않는 것이 중요합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list (2차원 배열)',
           description: '격자 기반 시뮬레이션에서 보드 상태를 2차원 리스트로 관리합니다.',
@@ -86,7 +86,7 @@ print(f"최종 위치: ({x}, {y}), 방문 칸 수: {visited}")`,
       spaceComplexity: 'O(NM)',
       keyInsight:
         '방향을 숫자로 인코딩(0=상, 1=우, 2=하, 3=좌)하고, dx/dy 배열로 이동합니다. 회전은 방향 인덱스의 덧셈/뺄셈으로 처리합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'dx, dy 방향 배열',
           description: '상하좌우 이동을 배열로 정의하여 반복문으로 처리합니다. dx = [-1, 0, 1, 0], dy = [0, 1, 0, -1].',
@@ -165,7 +165,7 @@ def roll_dice(dice, direction):
       spaceComplexity: 'O(N)',
       keyInsight:
         '회전은 deque의 rotate나 인덱스 연산으로 처리합니다. 연쇄 회전은 먼저 회전 여부를 모두 판단한 후 한꺼번에 회전해야 합니다 (회전하면서 판단하면 안 됨).',
-      pythonTools: [
+      tools: [
         {
           name: 'deque.rotate',
           description: 'deque의 rotate(1)은 시계방향, rotate(-1)은 반시계방향 회전입니다.',

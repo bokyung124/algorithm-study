@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { getVisualization } from '@/data/visualizations'
 import VisualizationPlayer from './VisualizationPlayer'
+import type { VisualizationConfig } from '@/types/visualization'
 
 interface Props {
   categoryId: string
@@ -10,9 +11,13 @@ interface Props {
 }
 
 export default function VisualizationSection({ categoryId, patternId }: Props) {
-  const config = getVisualization(categoryId, patternId)
+  const [config, setConfig] = useState<VisualizationConfig | null>(null)
   const [inputText, setInputText] = useState('')
   const [key, setKey] = useState(0)
+
+  useEffect(() => {
+    getVisualization(categoryId, patternId).then(setConfig)
+  }, [categoryId, patternId])
 
   if (!config) return null
 

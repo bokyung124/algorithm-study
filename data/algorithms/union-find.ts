@@ -16,7 +16,7 @@ export const unionFindCategory: Category = {
       spaceComplexity: 'O(N)',
       keyInsight:
         '경로 압축만으로도 매우 빠르지만, 랭크 기반 합치기를 함께 사용하면 트리가 극도로 납작해져서 사실상 상수 시간에 동작합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description: 'parent와 rank 배열을 생성합니다. list(range(n+1))로 parent를 자기 자신으로 초기화합니다.',
@@ -132,7 +132,7 @@ print("사이클 있음" if has_cycle else "사이클 없음")`,
       spaceComplexity: 'O(N)',
       keyInsight:
         '각 노드에서 부모까지의 가중치를 저장하고, 경로 압축 시 가중치도 함께 누적하여 루트까지의 총 가중치를 관리합니다. 두 노드의 차이는 각각의 루트까지 가중치 차이로 구할 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description: 'parent, rank, weight 세 개의 배열을 관리합니다. weight[x]는 x에서 부모까지의 가중치를 저장합니다.',

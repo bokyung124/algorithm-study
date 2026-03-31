@@ -16,7 +16,7 @@ export const implementation: Category = {
       spaceComplexity: '문제에 따라 다름',
       keyInsight:
         '문제의 조건을 빠짐없이 정확하게 코드로 번역하는 것이 핵심입니다. 방향 전환, 경계 처리, 상태 관리 등 세부 사항을 놓치지 않아야 합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'collections.deque',
           description:
@@ -171,7 +171,7 @@ print(snake_game(6, apples, directions))`,
       spaceComplexity: '문제에 따라 다름',
       keyInsight:
         'Python의 강력한 문자열 메서드와 정규표현식을 활용하면 효율적으로 풀 수 있습니다. 인덱싱, 슬라이싱, split, join 등을 자유롭게 다루는 것이 중요합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'str 내장 메서드',
           description:
@@ -273,7 +273,7 @@ print(compress_string("abcabcabcabc"))     # 6 ("4abc")`,
       spaceComplexity: 'O(n * m)',
       keyInsight:
         'n x m 행렬을 90도 시계 방향으로 회전하면 (r, c) -> (c, n-1-r)이 됩니다. Python에서는 zip과 reversed를 활용하면 간결하게 구현할 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'zip()',
           description:

@@ -16,7 +16,7 @@ export const graph: Category = {
       spaceComplexity: 'O(V)',
       keyInsight:
         '현재 정점에서 갈 수 있는 정점으로 계속 깊이 들어가다가 막히면 되돌아옵니다. 경로 탐색, 사이클 감지, 위상 정렬 등에 활용됩니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'sys',
           description:
@@ -130,7 +130,7 @@ print(dfs_grid(grid, 0, 0))  # 4`,
       spaceComplexity: 'O(V)',
       keyInsight:
         '큐에 시작 정점을 넣고, 인접 정점을 차례로 큐에 추가하며 탐색합니다. 간선 가중치가 모두 같을 때 최단 거리를 구할 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'collections.deque',
           description:
@@ -243,7 +243,7 @@ print(distances)  # {1: 0, 2: 1, 3: 1, 4: 2, 5: 2, 6: 2}`,
       spaceComplexity: 'O(V)',
       keyInsight:
         '모든 정점을 순회하면서 아직 방문하지 않은 정점에서 DFS/BFS를 시작합니다. 한 번의 탐색으로 도달하는 모든 정점이 하나의 연결 요소입니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'collections.deque',
           description:
@@ -359,7 +359,7 @@ print(components)  # 2`,
       spaceComplexity: 'O(V)',
       keyInsight:
         'Tarjan 알고리즘은 DFS 순회 중 스택과 방문 순서(dfn), 도달 가능한 최소 순서(low)를 관리합니다. low[u] == dfn[u]이면 u가 SCC의 루트입니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'sys',
           description:
@@ -505,7 +505,7 @@ print(kosaraju_scc(6, graph))  # [[1, 2, 3], [4, 5, 6]]`,
       spaceComplexity: 'O(V)',
       keyInsight:
         'BFS/DFS로 인접한 정점에 번갈아 색을 칠합니다. 인접한 정점이 같은 색이면 이분 그래프가 아닙니다. 홀수 길이 사이클이 존재하면 이분 그래프가 아닙니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'collections.deque',
           description:
@@ -570,6 +570,82 @@ for _ in range(T):
         '연결 요소가 여러 개일 수 있으므로 모든 정점에서 시작해야 합니다.',
         '이분 그래프는 홀수 길이 사이클이 없는 것과 동치입니다.',
         '이분 매칭, 최소 정점 커버 등 고급 알고리즘의 기반이 됩니다.',
+      ],
+    },
+    {
+      id: 'bipartite-matching',
+      name: '이분 매칭 (Bipartite Matching)',
+      description:
+        '이분 그래프에서 가능한 한 많은 간선을 선택하는 알고리즘입니다. 왼쪽 정점과 오른쪽 정점 사이에서 각 정점이 최대 1개의 간선에만 매칭되도록 합니다.',
+      timeComplexity: 'O(V × E)',
+      spaceComplexity: 'O(V + E)',
+      keyInsight:
+        '증가 경로(augmenting path) DFS가 핵심입니다. 오른쪽 정점 v가 이미 매칭되어 있더라도, v의 현재 매칭 상대를 다른 곳으로 재매칭할 수 있으면 전체 매칭을 1 늘릴 수 있습니다. König 정리: 이분 그래프의 최대 매칭 수 = 최소 정점 커버 크기.',
+      tools: [
+        {
+          name: 'list',
+          description:
+            'match_right[v] = v와 매칭된 왼쪽 정점 번호(-1이면 미매칭). visited 배열로 같은 탐색 내 중복 방문을 막습니다.',
+          import: '내장 자료형',
+        },
+        {
+          name: 'sys.setrecursionlimit',
+          description:
+            'DFS 깊이가 깊어질 수 있으므로 sys.setrecursionlimit(300000)으로 제한을 늘립니다.',
+          import: 'import sys',
+        },
+      ],
+      codeExamples: [
+        {
+          title: '이분 매칭 최대 매칭 수 (BOJ 11375 열혈강호)',
+          code: `import sys
+sys.setrecursionlimit(300000)
+input = sys.stdin.readline
+
+def solve():
+    n, m = map(int, input().split())  # 왼쪽 n개, 오른쪽 m개
+
+    graph = [[] for _ in range(n + 1)]  # graph[u]: u와 연결된 오른쪽 정점들
+    for u in range(1, n + 1):
+        row = list(map(int, input().split()))
+        for v in row[1:]:  # 첫 원소는 연결 수
+            graph[u].append(v)
+
+    match_right = [-1] * (m + 1)  # match_right[v]: 오른쪽 v에 매칭된 왼쪽 정점
+
+    def dfs(u, visited):
+        for v in graph[u]:
+            if visited[v]:
+                continue
+            visited[v] = True
+            # v가 미매칭이거나, v의 상대를 재매칭할 수 있으면 매칭 성공
+            if match_right[v] == -1 or dfs(match_right[v], visited):
+                match_right[v] = u
+                return True
+        return False
+
+    result = 0
+    for u in range(1, n + 1):
+        visited = [False] * (m + 1)  # 탐색마다 초기화
+        if dfs(u, visited):
+            result += 1
+
+    print(result)
+
+solve()`,
+          explanation:
+            '각 왼쪽 정점 u마다 DFS로 증가 경로를 찾습니다. 오른쪽 정점 v가 이미 매칭되었다면 v의 현재 상대를 재귀적으로 밀어내 새 자리를 만들 수 있는지 확인합니다. visited 배열은 탐색마다 초기화하여 무한 루프를 방지합니다.',
+        },
+      ],
+      commonProblems: [
+        { name: '열혈강호', platform: 'boj', id: '11375' },
+        { name: '열혈강호 2', platform: 'boj', id: '11376' },
+        { name: '이분 매칭', platform: 'boj', id: '2188' },
+      ],
+      tips: [
+        '왼쪽 정점마다 visited 배열을 새로 초기화해야 합니다. 초기화하지 않으면 잘못된 재매칭을 막아 최대 매칭보다 적은 값이 나올 수 있습니다.',
+        'König 정리: 최대 매칭 수 = 최소 정점 커버 크기. 최소 정점 커버는 매칭 결과로부터 역추적하여 구합니다.',
+        'Hopcroft-Karp 알고리즘을 사용하면 O(E × √V)로 최적화할 수 있습니다.',
       ],
     },
   ],

@@ -16,7 +16,7 @@ export const searching: Category = {
       spaceComplexity: 'O(1)',
       keyInsight:
         '정렬되지 않은 데이터에서 사용할 수 있는 가장 기본적인 탐색입니다. 특별한 전처리 없이 바로 적용할 수 있지만, 데이터가 크면 비효율적입니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description:
@@ -87,7 +87,7 @@ print(in_range)  # [3, 4, 5, 6]`,
       spaceComplexity: 'O(1)',
       keyInsight:
         '정렬된 배열의 중간 값과 목표 값을 비교하여 탐색 범위를 절반으로 줄입니다. 매 단계마다 탐색 공간이 반으로 줄어 매우 효율적입니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'bisect',
           description:
@@ -173,7 +173,7 @@ print(bisect_right(arr, 3))  # 5 (3 다음 위치)`,
       spaceComplexity: 'O(1)',
       keyInsight:
         '"정답이 x일 때 조건을 만족하는가?"라는 결정 함수를 만들고, 이분 탐색으로 조건을 만족하는 최적의 x를 찾습니다. 결정 함수의 결과가 단조적(monotonic)이어야 합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'bisect',
           description:

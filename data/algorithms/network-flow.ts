@@ -13,7 +13,7 @@ export const networkFlowCategory: Category = {
       timeComplexity: 'O(VE²)',
       spaceComplexity: 'O(V²)',
       keyInsight: 'BFS로 증가 경로를 찾고, 경로상 최소 잔여 용량만큼 유량을 보냅니다. 역방향 간선을 추가하여 유량 취소(되돌리기)를 가능하게 하는 것이 핵심입니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'collections.deque',
           description: 'BFS에서 큐로 사용합니다. popleft()가 O(1)이므로 효율적입니다.',
@@ -105,7 +105,7 @@ print(max_flow(6, edges, 0, 5))  # 19`,
       timeComplexity: 'O(VE)',
       spaceComplexity: 'O(V)',
       keyInsight: '각 왼쪽 노드에 대해 DFS로 매칭 가능한 오른쪽 노드를 찾습니다. 이미 매칭된 노드라도 상대방이 다른 노드로 옮길 수 있으면 매칭을 재조정합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'sys.setrecursionlimit',
           description: 'DFS 재귀 깊이를 늘려야 합니다.',

@@ -13,7 +13,7 @@ export const sweepingCategory: Category = {
       timeComplexity: 'O(N log N)',
       spaceComplexity: 'O(N)',
       keyInsight: '이벤트를 정렬하고 순서대로 처리하여 전체 탐색 없이 해결합니다. 정렬 후 한 번의 순회로 겹치는 구간이나 면적을 효율적으로 계산합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'sorted / list.sort',
           description: '이벤트(시작점, 끝점 등)를 좌표 기준으로 정렬합니다.',
@@ -105,7 +105,7 @@ print(get_skyline(buildings))`,
       timeComplexity: 'O(N log N)',
       spaceComplexity: 'O(N)',
       keyInsight: '구간의 시작과 끝을 별도의 이벤트로 분리하고 정렬합니다. 시작 이벤트에서 카운터를 증가시키고, 끝 이벤트에서 감소시키면 특정 시점의 활성 구간 수를 알 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'sorted / list.sort',
           description: '이벤트를 시간순으로 정렬합니다.',

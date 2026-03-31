@@ -1,13 +1,16 @@
-'use client'
-
-import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import { getCategoryById } from '@/data/categories'
+import { getCategoryById, allCategories } from '@/data/categories'
 import ComplexityBadge from '@/components/algorithm/ComplexityBadge'
 
-export default function CategoryPage() {
-  const params = useParams<{ categoryId: string }>()
-  const category = getCategoryById(params.categoryId ?? '')
+type Props = { params: Promise<{ categoryId: string }> }
+
+export async function generateStaticParams() {
+  return allCategories.map((c) => ({ categoryId: c.id }))
+}
+
+export default async function CategoryPage({ params }: Props) {
+  const { categoryId } = await params
+  const category = getCategoryById(categoryId)
 
   if (!category) {
     return <div className="text-center text-gray-500 py-12">카테고리를 찾을 수 없습니다.</div>

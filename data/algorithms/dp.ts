@@ -16,7 +16,7 @@ export const dp: Category = {
       spaceComplexity: 'O(W) (1차원 최적화 시)',
       keyInsight:
         'dp[w] = 용량 w일 때의 최대 가치로 정의합니다. 각 물건에 대해 넣을지 말지를 결정하며, 0/1 배낭은 역순으로, 무한 배낭은 순방향으로 순회합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description:
@@ -101,7 +101,7 @@ print(unbounded_knapsack([1, 5, 10], 27))  # 5 (10+10+5+1+1)`,
       spaceComplexity: 'O(n)',
       keyInsight:
         'tails 배열을 유지하면서 이분 탐색으로 각 원소가 들어갈 위치를 찾습니다. tails[i]는 길이 i+1인 증가 부분 수열의 마지막 원소 중 최솟값입니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'bisect',
           description:
@@ -208,7 +208,7 @@ print(lis_with_sequence([10, 20, 10, 30, 20, 50]))
       spaceComplexity: '문제에 따라 다름',
       keyInsight:
         'Top-Down은 필요한 부분 문제만 계산하고, Bottom-Up은 모든 부분 문제를 순서대로 계산합니다. 상태 전이식을 세우는 것이 핵심입니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'functools.lru_cache',
           description:
@@ -305,7 +305,7 @@ print(climb_stairs_opt(10))  # 89`,
       spaceComplexity: 'O(n²)',
       keyInsight:
         'dp[i][j]를 구간 [i, j]에 대한 최적값으로 정의하고, 구간의 길이를 늘려가며 테이블을 채웁니다. 분할 지점 k를 순회하여 dp[i][k]와 dp[k+1][j]를 합칩니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description:
@@ -384,6 +384,164 @@ print(min_insertions_palindrome("abcba"))  # 0`,
         '구간의 길이를 작은 것부터 큰 것 순으로 채워야 합니다.',
         'dp[i][j]의 정의를 명확히 하는 것이 가장 중요합니다.',
         'O(n³)이므로 n이 500 이하인 문제에서 주로 사용됩니다.',
+      ],
+    },
+    {
+      id: 'tree-dp',
+      name: '트리 DP',
+      description:
+        '트리 구조에서 각 노드를 루트로 하는 서브트리에 대한 최적값을 구하는 DP입니다. DFS로 자식에서 부모 방향으로 DP 테이블을 채웁니다.',
+      timeComplexity: 'O(n)',
+      spaceComplexity: 'O(n)',
+      keyInsight:
+        'dp[v][0] = v를 선택하지 않을 때 서브트리 최적값, dp[v][1] = v를 선택할 때 서브트리 최적값으로 정의합니다. 자식의 결과를 부모로 올리는 상향식 DFS가 핵심입니다. 트리 독립 집합, 지배 집합 등에서 자주 등장합니다.',
+      tools: [
+        {
+          name: 'sys.setrecursionlimit',
+          description:
+            '트리 깊이만큼 재귀가 발생하므로 sys.setrecursionlimit(300000)으로 제한을 늘려야 합니다.',
+          import: 'import sys',
+        },
+        {
+          name: 'collections.defaultdict',
+          description:
+            '인접 리스트를 defaultdict(list)로 관리합니다. append로 간선을 추가하고 DFS 시 방문 여부로 루트 방향 역추적을 막습니다.',
+          import: 'from collections import defaultdict',
+        },
+      ],
+      codeExamples: [
+        {
+          title: '트리 독립 집합 최대 가중치 (BOJ 2213)',
+          code: `import sys
+from collections import defaultdict
+sys.setrecursionlimit(300000)
+input = sys.stdin.readline
+
+def solve():
+    n = int(input())
+    weights = [0] + list(map(int, input().split()))  # 1-indexed
+
+    graph = defaultdict(list)
+    for _ in range(n - 1):
+        u, v = map(int, input().split())
+        graph[u].append(v)
+        graph[v].append(u)
+
+    # dp[v][0]: v 미선택, dp[v][1]: v 선택
+    dp = [[0, 0] for _ in range(n + 1)]
+    visited = [False] * (n + 1)
+
+    def dfs(v):
+        visited[v] = True
+        dp[v][1] = weights[v]  # 자신을 선택하면 자신의 가중치
+
+        for child in graph[v]:
+            if not visited[child]:
+                dfs(child)
+                # v 미선택: 자식은 선택/미선택 중 최대
+                dp[v][0] += max(dp[child][0], dp[child][1])
+                # v 선택: 자식은 반드시 미선택 (독립 집합 조건)
+                dp[v][1] += dp[child][0]
+
+    dfs(1)
+    return max(dp[1][0], dp[1][1])
+
+print(solve())`,
+          explanation:
+            'DFS로 리프부터 루트 방향으로 dp를 채웁니다. dp[v][1] += dp[child][0]이 핵심: v를 선택하면 자식은 선택 불가입니다. House Robber III(LC 337)도 동일한 구조입니다.',
+        },
+      ],
+      commonProblems: [
+        { name: '트리의 독립집합', platform: 'boj', id: '2213' },
+        { name: '사회망 서비스(SNS)', platform: 'boj', id: '2533' },
+        {
+          name: 'House Robber III',
+          platform: 'leetcode',
+          id: '337',
+          slug: 'house-robber-iii',
+          difficulty: 'Medium',
+        },
+      ],
+      tips: [
+        '루트를 1번 노드로 고정하고 방문 배열로 부모 방향 역추적을 막습니다.',
+        '재귀 대신 스택 기반 반복 DFS(후위 순회)로 구현하면 재귀 깊이 제한을 피할 수 있습니다.',
+        '상태를 2개(선택/미선택)로 정의하는 것이 트리 DP의 가장 일반적인 패턴입니다.',
+      ],
+    },
+    {
+      id: 'bitmask-dp',
+      name: '비트마스크 DP',
+      description:
+        '방문한 정점이나 선택된 원소의 집합을 비트마스크(정수)로 표현하는 DP입니다. n개 원소의 부분집합 탐색을 O(n × 2^n)으로 처리합니다.',
+      timeComplexity: 'O(n² × 2^n)',
+      spaceComplexity: 'O(n × 2^n)',
+      keyInsight:
+        'dp[mask][v] = mask(방문한 도시 집합)에서 마지막 위치가 v일 때 최적값. 비트 연산으로 상태를 전이합니다: mask | (1 << u)로 u를 방문 집합에 추가, mask & (1 << v)로 v 방문 여부 확인.',
+      tools: [
+        {
+          name: 'list',
+          description:
+            '[[INF] * n for _ in range(1 << n)]으로 (2^n) × n 크기의 DP 테이블을 만듭니다. n이 20을 넘으면 메모리 초과에 주의하세요.',
+          import: '내장 자료형',
+        },
+      ],
+      codeExamples: [
+        {
+          title: '외판원 순회 (TSP, BOJ 2098)',
+          code: `import sys
+input = sys.stdin.readline
+INF = float('inf')
+
+def tsp(dist, n):
+    """외판원 순회 최솟값"""
+    # dp[mask][v]: mask에 속한 도시를 방문하고 마지막 위치가 v일 때 최솟값
+    dp = [[INF] * n for _ in range(1 << n)]
+    dp[1][0] = 0  # 도시 0에서 출발 (비트 0번 = 1)
+
+    for mask in range(1, 1 << n):
+        for v in range(n):
+            if dp[mask][v] == INF:
+                continue
+            if not (mask & (1 << v)):  # v가 mask에 포함되지 않으면 스킵
+                continue
+            for u in range(n):
+                if mask & (1 << u):   # 이미 방문한 도시
+                    continue
+                if dist[v][u] == 0:   # 연결 없음
+                    continue
+                next_mask = mask | (1 << u)
+                dp[next_mask][u] = min(dp[next_mask][u], dp[mask][v] + dist[v][u])
+
+    # 모든 도시 방문 후 출발지(0)로 귀환하는 최솟값
+    full = (1 << n) - 1
+    return min(
+        dp[full][v] + dist[v][0]
+        for v in range(1, n)
+        if dp[full][v] != INF and dist[v][0] != 0
+    )
+
+n = int(input())
+dist = [list(map(int, input().split())) for _ in range(n)]
+print(tsp(dist, n))`,
+          explanation:
+            'mask를 0부터 (2^n - 1)까지 순서대로 처리하면 작은 집합 → 큰 집합 순서가 보장됩니다. full mask에서 출발점(0)으로 돌아오는 최솟값이 TSP 답입니다.',
+        },
+      ],
+      commonProblems: [
+        { name: '외판원 순회', platform: 'boj', id: '2098' },
+        { name: '집합의 합', platform: 'boj', id: '1450' },
+        {
+          name: 'Shortest Path Visiting All Nodes',
+          platform: 'leetcode',
+          id: '847',
+          slug: 'shortest-path-visiting-all-nodes',
+          difficulty: 'Hard',
+        },
+      ],
+      tips: [
+        'n이 20 이하일 때 사용합니다. n=20이면 2^20 ≈ 100만으로 DP 테이블이 감당 가능합니다.',
+        '비트 연산: (mask >> i) & 1로 i번째 비트 확인, mask | (1 << i)로 i번째 비트 설정, mask & ~(1 << i)로 i번째 비트 제거.',
+        'mask를 오름차순으로 순회하면 집합의 크기가 작은 것부터 큰 것 순으로 처리됩니다.',
       ],
     },
   ],

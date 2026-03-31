@@ -13,7 +13,7 @@ export const bitmaskCategory: Category = {
       timeComplexity: 'O(1) (단일 연산)',
       spaceComplexity: 'O(1)',
       keyInsight: '정수의 각 비트를 하나의 원소로 보면, 집합 연산을 비트 연산으로 O(1)에 수행할 수 있습니다. i번째 비트가 1이면 i번 원소가 집합에 포함된 것입니다.',
-      pythonTools: [
+      tools: [
         {
           name: '비트 연산자 (&, |, ^, ~, <<, >>)',
           description: 'AND(&), OR(|), XOR(^), NOT(~), 왼쪽 시프트(<<), 오른쪽 시프트(>>)로 비트 단위 집합 연산을 O(1)에 수행합니다.',
@@ -121,7 +121,7 @@ print(single_number_iii([1, 2, 1, 3, 2, 5]))  # [3, 5] 또는 [5, 3]`,
       timeComplexity: 'O(2^n) 또는 O(3^n)',
       spaceComplexity: 'O(2^n)',
       keyInsight: '0부터 2^N-1까지의 정수 각각이 하나의 부분집합을 나타냅니다. 특정 마스크의 부분집합만 열거할 때는 submask = (submask - 1) & mask 패턴을 사용합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'range(1 << n)',
           description: '0부터 2^n-1까지 순회하며 모든 부분집합을 열거합니다. 1 << n은 2의 n제곱을 비트 시프트로 빠르게 계산합니다.',
@@ -223,7 +223,7 @@ print(subset_sum_count(arr, 10))  # 3 ({1,4,5}, {2,3,5}, {1,2,3,4})`,
       timeComplexity: 'O(2^n * n^2) (TSP 기준)',
       spaceComplexity: 'O(2^n * n)',
       keyInsight: '현재 상태를 "어떤 원소들을 사용했는가"로 표현하면, 집합을 하나의 정수(비트마스크)로 압축하여 DP 테이블 인덱스로 활용할 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description: 'DP 테이블을 2차원 리스트로 생성합니다. [[INF] * n for _ in range(1 << n)]으로 상태 공간 크기만큼 초기화합니다.',

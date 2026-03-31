@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState, useMemo, type ReactNode } from 'react'
+import { createContext, useContext, useEffect, useState, useMemo, useCallback, type ReactNode } from 'react'
 import type { User, Session, SupabaseClient } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/client'
 
@@ -37,19 +37,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => subscription.unsubscribe()
   }, [supabase])
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = useCallback(async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     return { error: error as Error | null }
-  }
+  }, [supabase])
 
-  const signUp = async (email: string, password: string) => {
+  const signUp = useCallback(async (email: string, password: string) => {
     const { error } = await supabase.auth.signUp({ email, password })
     return { error: error as Error | null }
-  }
+  }, [supabase])
 
-  const signOut = async () => {
+  const signOut = useCallback(async () => {
     await supabase.auth.signOut()
-  }
+  }, [supabase])
 
   return (
     <AuthContext.Provider value={{ user, session, loading, supabase, signIn, signUp, signOut }}>

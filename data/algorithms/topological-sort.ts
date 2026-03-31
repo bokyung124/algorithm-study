@@ -16,7 +16,7 @@ export const topologicalSortCategory: Category = {
       spaceComplexity: 'O(V + E)',
       keyInsight:
         '진입차수가 0인 정점은 선행 조건이 모두 완료된 정점입니다. 이를 처리하면 후속 정점의 진입차수가 줄어들어 새로운 0이 생깁니다. 모든 정점을 처리하지 못하면 사이클이 존재합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'collections.deque',
           description: 'BFS 큐로 사용합니다. popleft()가 O(1)이므로 list.pop(0)의 O(N) 대비 훨씬 효율적입니다.',
@@ -143,7 +143,7 @@ print(critical_path(n, graph, in_degree, time_cost))`,
       spaceComplexity: 'O(V + E)',
       keyInsight:
         'DFS에서 한 정점의 모든 후속 정점을 방문한 뒤(후위) 스택에 넣으면, 스택을 뒤집었을 때 선행 정점이 앞에 오게 됩니다. 방문 중인 노드를 다시 만나면 사이클입니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'sys',
           description: 'setrecursionlimit 설정이 필수입니다. DFS 재귀 깊이가 정점 수만큼 깊어질 수 있으므로 충분히 크게 설정합니다.',

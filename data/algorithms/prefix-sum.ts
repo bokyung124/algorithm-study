@@ -16,7 +16,7 @@ export const prefixSumCategory: Category = {
       spaceComplexity: 'O(N)',
       keyInsight:
         'prefix[i] = arr[0] + arr[1] + ... + arr[i-1]로 정의하면, 구간 합 arr[l..r] = prefix[r+1] - prefix[l]로 O(1)에 구할 수 있습니다. 누적 합 배열을 한 번만 만들면 여러 쿼리를 빠르게 처리합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'itertools.accumulate',
           description: '배열의 누적 합을 한 줄로 생성합니다. initial=0 옵션을 사용하면 prefix[0]=0인 누적 합 배열을 바로 만들 수 있습니다.',
@@ -74,7 +74,7 @@ solve()`,
       spaceComplexity: 'O(NM)',
       keyInsight:
         '2D 누적 합 테이블에서 (r1,c1)~(r2,c2) 영역의 합은 prefix[r2][c2] - prefix[r1-1][c2] - prefix[r2][c1-1] + prefix[r1-1][c1-1]로 구합니다. 포함-배제 원리로 겹치는 부분을 보정합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'itertools.accumulate',
           description: '각 행의 누적 합을 생성할 때 활용합니다. 2D 누적 합은 행 방향, 열 방향으로 두 번 누적합니다.',
@@ -142,7 +142,7 @@ solve()`,
       spaceComplexity: 'O(N)',
       keyInsight:
         'prefix[j] - prefix[i] = K가 되려면 prefix[i] = prefix[j] - K인 i가 존재하면 됩니다. 해시맵에 지금까지의 누적 합 빈도를 저장하며 순회하면 O(N)에 해결됩니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'itertools.accumulate',
           description: '누적 합 배열을 생성합니다. 해시맵과 결합하여 조건을 만족하는 구간을 빠르게 찾습니다.',

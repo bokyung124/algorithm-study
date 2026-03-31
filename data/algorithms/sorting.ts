@@ -16,7 +16,7 @@ export const sorting: Category = {
       spaceComplexity: 'O(1)',
       keyInsight:
         '인접 원소를 반복적으로 비교·교환하여 매 라운드마다 정렬되지 않은 구간의 최댓값이 제자리를 찾아갑니다. 교환이 한 번도 일어나지 않으면 조기 종료할 수 있습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description:
@@ -82,7 +82,7 @@ print(bubble_sort([5, 3, 8, 1, 2]))  # [1, 2, 3, 5, 8]`,
       spaceComplexity: 'O(n)',
       keyInsight:
         '배열을 절반으로 분할하고, 각각 재귀적으로 정렬한 뒤, 두 정렬된 배열을 하나로 병합합니다. 병합 과정에서 두 포인터를 사용하여 작은 값부터 채워 넣습니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description:
@@ -185,7 +185,7 @@ print(inv)  # 3`,
       spaceComplexity: 'O(log n) (재귀 스택)',
       keyInsight:
         '피벗을 선택한 뒤 피벗보다 작은 원소는 왼쪽, 큰 원소는 오른쪽으로 분할합니다. 분할 후 각 부분을 재귀적으로 정렬합니다. 피벗 선택 전략이 성능에 큰 영향을 줍니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'random',
           description:
@@ -278,7 +278,7 @@ print(data)  # [1, 5, 7, 8, 9, 10]`,
       spaceComplexity: 'O(k)',
       keyInsight:
         '각 값이 몇 번 등장하는지 카운트 배열에 기록한 뒤, 카운트 배열을 순회하며 결과를 만듭니다. 값의 범위가 작을 때 매우 효율적입니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'list',
           description:
@@ -373,7 +373,7 @@ print(frequency_sort("tree"))  # "eert" 또는 "eetr"`,
       spaceComplexity: 'O(n)',
       keyInsight:
         '정렬 기준을 직접 정의하는 것이 핵심입니다. 단일 기준은 key 함수로, 두 원소를 이어붙여 비교하는 등 복잡한 기준은 cmp_to_key로 비교 함수를 작성합니다. 다중 기준 정렬은 튜플 key로 우선순위를 표현합니다.',
-      pythonTools: [
+      tools: [
         {
           name: 'sorted() / list.sort()',
           description:

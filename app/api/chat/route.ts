@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@/lib/supabase/server'
 
 interface RequestBody {
   messages: { role: 'user' | 'assistant'; content: string }[]
@@ -6,6 +7,12 @@ interface RequestBody {
 }
 
 export async function POST(request: NextRequest) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const apiKey = process.env.GEMINI_API_KEY
   if (!apiKey) {
     return NextResponse.json({ error: 'GEMINI_API_KEY not configured' }, { status: 500 })
@@ -106,6 +113,6 @@ export async function POST(request: NextRequest) {
       },
     })
   } catch (error) {
-    return NextResponse.json({ error: `Failed to call Gemini: ${error}` }, { status: 500 })
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
